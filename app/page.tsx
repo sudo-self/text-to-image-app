@@ -212,8 +212,8 @@ wget -O generated-image.png "${API_URL}?prompt=${encodeURIComponent(prompt)}"`
 
   return (
     <div className="container mx-auto py-8 px-4">
-      <h1 className="text-3xl font-bold mb-6 text-center">Text-to-Image AI</h1>
-      <p className="text-center mb-8 text-muted-foreground">cloudflared workers {API_URL}</p>
+      <h1 className="text-3xl font-bold mb-6 text-center">Text-to-Image</h1>
+      <p className="text-center mb-8 text-muted-foreground">{API_URL}</p>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         <Card>
@@ -447,36 +447,6 @@ generated-image.png                   100%[=====================================
               </Button>
             </CardFooter>
           )}
-        </Card>
-      </div>
-
-      <div className="mt-12">
-        <Card>
-          <CardHeader>
-            <CardTitle>Example Prompts</CardTitle>
-            <CardDescription>Try these example prompts to get started</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {[
-                "A serene landscape with mountains and a lake at sunset",
-                "A futuristic city with flying cars and neon lights",
-                "A cute cartoon cat wearing a space suit on the moon",
-                "An underwater scene with colorful coral reefs and tropical fish",
-                "A magical forest with glowing mushrooms and fairy lights",
-                "A steampunk-inspired mechanical dragon",
-              ].map((examplePrompt, index) => (
-                <Button
-                  key={index}
-                  variant="outline"
-                  className="h-auto py-3 px-4 justify-start text-left"
-                  onClick={() => setPrompt(examplePrompt)}
-                >
-                  {examplePrompt}
-                </Button>
-              ))}
-            </div>
-          </CardContent>
         </Card>
       </div>
 
