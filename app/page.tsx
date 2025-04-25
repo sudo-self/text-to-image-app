@@ -232,10 +232,11 @@ wget -O generated-image.png "${API_URL}?prompt=${encodeURIComponent(prompt)}"`
   }
 
   return (
-    <div className="container mx-auto py-8 px-4">
-          <h1 className="text-3xl font-bold mb-6 text-center bg-gradient-to-r from-amber-500 to-sky-500 bg-clip-text text-transparent">
-            Text-to-Image
-          </h1>
+          <div className="container mx-auto py-8 px-4">
+            <h1 className="text-3xl font-bold mb-6 text-center bg-gradient-to-r from-amber-500 to-sky-500 bg-clip-text text-transparent">
+              Text-to-Image
+            </h1>
+          </div>
 
           <a
             href="https://image.jessejesse.com"
