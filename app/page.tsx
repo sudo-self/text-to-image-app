@@ -213,7 +213,7 @@ wget -O generated-image.png "${API_URL}?prompt=${encodeURIComponent(prompt)}"`
   return (
     <div className="container mx-auto py-8 px-4">
       <h1 className="text-3xl font-bold mb-6 text-center">Text-to-Image</h1>
-      <p className="text-center mb-8 text-muted-foreground">{API_URL}</p>
+      <p className="text-center mb-8 text-muted-foreground">image.JesseJesse.com</p>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         <Card>
