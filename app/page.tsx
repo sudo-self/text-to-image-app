@@ -130,92 +130,93 @@ wget -O generated-image.png "${API_URL}?prompt=${encodeURIComponent(prompt)}"`
   }
 
   const downloadImage = (url: string, format: string) => {
-    // Create a new image element
-    const img = new Image()
-    img.crossOrigin = "anonymous" // Important for CORS
+  // Create a new image element
+  const img = new Image()
+  img.crossOrigin = "anonymous" // Important for CORS
 
-    // Set up event handlers before setting src
-    img.onload = () => {
-      try {
-        // Create canvas
-        const canvas = document.createElement("canvas")
-        canvas.width = img.width
-        canvas.height = img.height
-        const ctx = canvas.getContext("2d")
+  // Set up event handlers before setting src
+  img.onload = () => {
+    try {
+      // Create canvas
+      const canvas = document.createElement("canvas")
+      canvas.width = img.width
+      canvas.height = img.height
+      const ctx = canvas.getContext("2d")
 
-        if (!ctx) {
-          throw new Error("Could not create canvas context")
-        }
+      if (!ctx) {
+        throw new Error("Could not create canvas context")
+      }
 
-        // Draw image on canvas
-        ctx.drawImage(img, 0, 0)
+      // Draw image on canvas
+      ctx.drawImage(img, 0, 0)
 
-        // Prepare download
-        let downloadUrl
-        let filename = `generated-image-${Date.now()}`
+      // Prepare download
+      let downloadUrl
+      let filename = `generated-image-${Date.now()}`
 
-        // Convert to requested format
-        if (format === "png") {
-          downloadUrl = canvas.toDataURL("image/png")
-          filename += ".png"
-        } else if (format === "jpg") {
-          downloadUrl = canvas.toDataURL("image/jpeg", 0.9)
-          filename += ".jpg"
-        } else if (format === "svg") {
-          // Basic SVG wrapper around the image
-          const svgData = `
+      // Convert to requested format
+      if (format === "png") {
+        downloadUrl = canvas.toDataURL("image/png")
+        filename += ".png"
+      } else if (format === "jpg") {
+        downloadUrl = canvas.toDataURL("image/jpeg", 0.9)
+        filename += ".jpg"
+      } else if (format === "svg") {
+        // Basic SVG wrapper around the image
+        const svgData = `
           <svg xmlns="http://www.w3.org/2000/svg" width="${img.width}" height="${img.height}">
             <image width="${img.width}" height="${img.height}" href="${canvas.toDataURL("image/png")}" />
           </svg>
         `
-          const blob = new Blob([svgData], { type: "image/svg+xml" })
-          downloadUrl = URL.createObjectURL(blob)
-          filename += ".svg"
-        } else {
-          throw new Error(`Unsupported format: ${format}`)
-        }
-
-        // Create and trigger download link
-        const a = document.createElement("a")
-        a.href = downloadUrl
-        a.download = filename
-        document.body.appendChild(a)
-        a.click()
-
-        // Clean up
-        setTimeout(() => {
-          document.body.removeChild(a)
-          if (format === "svg") {
-            URL.revokeObjectURL(downloadUrl)
-          }
-        }, 100)
-
-        toast({
-          title: "Download started",
-          description: `Your image is being downloaded as ${format.toUpperCase()}`,
-        })
-      } catch (error) {
-        console.error("Download error:", error)
-        toast({
-          title: "Download failed",
-          description: error instanceof Error ? error.message : "Failed to download image",
-          variant: "destructive",
-        })
+        const blob = new Blob([svgData], { type: "image/svg+xml" })
+        downloadUrl = URL.createObjectURL(blob)
+        filename += ".svg"
+      } else {
+        throw new Error(`Unsupported format: ${format}`)
       }
-    }
 
-    img.onerror = () => {
-      console.error("Image loading failed")
+      // Create and trigger download link
+      const a = document.createElement("a")
+      a.href = downloadUrl
+      a.download = filename
+      document.body.appendChild(a)
+      a.click()
+
+      // Clean up
+      setTimeout(() => {
+        document.body.removeChild(a)
+        if (format === "svg") {
+          URL.revokeObjectURL(downloadUrl)
+        }
+      }, 100)
+
       toast({
-        title: "Error",
-        description: "Failed to load image for download",
+        title: "Download started",
+        description: `Your image is being downloaded as ${format.toUpperCase()}`,
+      })
+    } catch (error) {
+      console.error("Download error:", error)
+      toast({
+        title: "Download failed",
+        description: error instanceof Error ? error.message : "Failed to download image",
         variant: "destructive",
       })
     }
-
-    // Set the source to start loading
-    img.src = url
   }
+
+  img.onerror = () => {
+    console.error("Image loading failed")
+    toast({
+      title: "Error",
+      description: "Failed to load image for download",
+      variant: "destructive",
+    })
+  }
+
+  // Set the source to start loading
+  img.src = url
+}
+
 
   const getCommandOutput = () => {
     const filename = outputFilename || "generated-image.png"
