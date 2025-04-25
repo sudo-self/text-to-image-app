@@ -129,93 +129,95 @@ wget -O generated-image.png "${API_URL}?prompt=${encodeURIComponent(prompt)}"`
     }
   }
 
-  const downloadImage = (url: string, format: string) => {
-    // Create a new image element
-    const img = new Image()
-    img.crossOrigin = "anonymous" // Important for CORS
 
-    // Set up event handlers before setting src
-    img.onload = () => {
-      try {
-        // Create canvas
-        const canvas = document.createElement("canvas")
-        canvas.width = img.width
-        canvas.height = img.height
-        const ctx = canvas.getContext("2d")
+          const downloadImage = (url: string, format: string) => {
+     
+            const img = new Image()
+            img.crossOrigin = "anonymous"
 
-        if (!ctx) {
-          throw new Error("Could not create canvas context")
-        }
+          
+            img.onload = () => {
+              try {
+              
+                const canvas = document.createElement("canvas")
+                canvas.width = img.width
+                canvas.height = img.height
+                const ctx = canvas.getContext("2d")
 
-        // Draw image on canvas
-        ctx.drawImage(img, 0, 0)
+                if (!ctx) {
+                  throw new Error("Could not create canvas context")
+                }
 
-        // Prepare download
-        let downloadUrl
-        let filename = `generated-image-${Date.now()}`
+          
+                ctx.drawImage(img, 0, 0)
 
-        // Convert to requested format
-        if (format === "png") {
-          downloadUrl = canvas.toDataURL("image/png")
-          filename += ".png"
-        } else if (format === "jpg") {
-          downloadUrl = canvas.toDataURL("image/jpeg", 0.9)
-          filename += ".jpg"
-        } else if (format === "svg") {
-          // Basic SVG wrapper around the image
-          const svgData = `
-          <svg xmlns="http://www.w3.org/2000/svg" width="${img.width}" height="${img.height}">
-            <image width="${img.width}" height="${img.height}" href="${canvas.toDataURL("image/png")}" />
-          </svg>
-        `
-          const blob = new Blob([svgData], { type: "image/svg+xml" })
-          downloadUrl = URL.createObjectURL(blob)
-          filename += ".svg"
-        } else {
-          throw new Error(`Unsupported format: ${format}`)
-        }
+           
+                let downloadUrl
+                let filename = `generated-image-${Date.now()}`
 
-        // Create and trigger download link
-        const a = document.createElement("a")
-        a.href = downloadUrl
-        a.download = filename
-        document.body.appendChild(a)
-        a.click()
+         
+                if (format === "png") {
+                  downloadUrl = canvas.toDataURL("image/png")
+                  filename += ".png"
+                } else if (format === "jpg") {
+                  downloadUrl = canvas.toDataURL("image/jpeg", 0.9)
+                  filename += ".jpg"
+                } else if (format === "svg") {
+             
+                  const svgData = `
+                    <svg xmlns="http://www.w3.org/2000/svg" width="${img.width}" height="${img.height}">
+                      <image width="${img.width}" height="${img.height}" href="${canvas.toDataURL("image/png")}" />
+                    </svg>
+                  `
+                  const blob = new Blob([svgData], { type: "image/svg+xml" })
+                  downloadUrl = URL.createObjectURL(blob)
+                  filename += ".svg"
+                } else {
+                  throw new Error(`Unsupported format: ${format}`)
+                }
 
-        // Clean up
-        setTimeout(() => {
-          document.body.removeChild(a)
-          if (format === "svg") {
-            URL.revokeObjectURL(downloadUrl)
+          
+                const a = document.createElement("a")
+                a.href = downloadUrl
+                a.download = filename
+                document.body.appendChild(a)
+                a.click()
+
+         
+                setTimeout(() => {
+                  document.body.removeChild(a)
+                  if (format === "svg") {
+                    URL.revokeObjectURL(downloadUrl)
+                  }
+                }, 100)
+
+                toast({
+                  title: "Download started",
+                  description: `Your image is being downloaded as ${format.toUpperCase()}`,
+                })
+              } catch (error) {
+                console.error("Download error:", error)
+                toast({
+                  title: "Download failed",
+                  description: error instanceof Error ? error.message : "Failed to download image",
+                  variant: "destructive",
+                })
+              }
+            }
+
+            img.onerror = () => {
+              console.error("Image loading failed")
+              toast({
+                title: "Error",
+                description: "Failed to load image for download",
+                variant: "destructive",
+              })
+            }
+
+            // Set the source to start loading
+            img.src = url
           }
-        }, 100)
 
-        toast({
-          title: "Download started",
-          description: `Your image is being downloaded as ${format.toUpperCase()}`,
-        })
-      } catch (error) {
-        console.error("Download error:", error)
-        toast({
-          title: "Download failed",
-          description: error instanceof Error ? error.message : "Failed to download image",
-          variant: "destructive",
-        })
-      }
-    }
-
-    img.onerror = () => {
-      console.error("Image loading failed")
-      toast({
-        title: "Error",
-        description: "Failed to load image for download",
-        variant: "destructive",
-      })
-    }
-
-    // Set the source to start loading
-    img.src = url
-  }
 
   const getCommandOutput = () => {
     const filename = outputFilename || "generated-image.png"
@@ -362,7 +364,7 @@ wget -O generated-image.png "${API_URL}?prompt=${encodeURIComponent(prompt)}"`
 
         <Card>
           <CardHeader>
-            <CardTitle>Response</CardTitle>
+            <CardTitle>Image</CardTitle>
             <CardDescription>The generated image will appear here</CardDescription>
           </CardHeader>
           <CardContent className="flex flex-col items-center justify-center min-h-[300px]">
@@ -417,20 +419,27 @@ wget -O generated-image.png "${API_URL}?prompt=${encodeURIComponent(prompt)}"`
                   </div>
                 </RadioGroup>
               </div>
-              <Button
-                className="w-full"
-                onClick={() => {
-                  // Get all radio buttons in the RadioGroup
-                  const radioGroup = document.querySelector('input[name="format"]:checked') as HTMLInputElement
-                  const selectedFormat = radioGroup ? radioGroup.value : "png"
+                        <Button
+                          className="w-full"
+                          onClick={async () => {
+                            const radioGroup = document.querySelector('input[name="format"]:checked') as HTMLInputElement
+                            const selectedFormat = radioGroup ? radioGroup.value : "png"
 
-                  // Download the image
-                  downloadImage(imageUrl, selectedFormat)
-                }}
-              >
-                <Download className="mr-2 h-4 w-4" />
-                Download Image
-              </Button>
+                            const res = await fetch(imageUrl)
+                            const blob = await res.blob()
+                            const blobUrl = URL.createObjectURL(new Blob([blob], { type: `image/${selectedFormat}` }))
+                            
+                            const a = document.createElement("a")
+                            a.href = blobUrl
+                            a.download = `download.${selectedFormat}`
+                            a.click()
+                            URL.revokeObjectURL(blobUrl)
+                          }}
+                        >
+                          <Download className="mr-2 h-4 w-4" />
+                          Download Image
+                        </Button>
+
             </CardFooter>
           )}
         </Card>
