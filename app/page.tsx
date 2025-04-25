@@ -213,7 +213,7 @@ wget -O generated-image.png "${API_URL}?prompt=${encodeURIComponent(prompt)}"`
     })
   }
 
-  // Set the source to start loading
+
   img.src = url
 }
 
@@ -237,6 +237,10 @@ wget -O generated-image.png "${API_URL}?prompt=${encodeURIComponent(prompt)}"`
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         <Card>
+           <CardHeader>
+            <CardTitle>Text</CardTitle>
+            <CardDescription>prompt to convert to image</CardDescription>
+          </CardHeader>
           <CardContent>
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="space-y-2">
