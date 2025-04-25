@@ -438,20 +438,29 @@ generated-image.png                   100%[=====================================
                   </div>
                 </RadioGroup>
               </div>
-              <Button
-                className="w-full"
-                onClick={() => {
-                  // Get all radio buttons in the RadioGroup
-                  const radioGroup = document.querySelector('input[name="format"]:checked') as HTMLInputElement
-                  const selectedFormat = radioGroup ? radioGroup.value : "png"
+             <Button
+  className="w-full"
+  onClick={() => {
+    // Get the selected radio button in the RadioGroup
+    const radioGroup = document.querySelector('input[name="format"]:checked') as HTMLInputElement;
+    const selectedFormat = radioGroup ? radioGroup.value : "png"; // Default to 'png' if no format is selected
 
-                  // Download the image
-                  downloadImage(imageUrl, selectedFormat)
-                }}
-              >
-                <Download className="mr-2 h-4 w-4" />
-                Download Image
-              </Button>
+    // Ensure the imageUrl is defined
+    if (imageUrl) {
+      // Download the image in the selected format
+      const a = document.createElement('a');
+      a.href = imageUrl;
+      a.download = `image.${selectedFormat}`;
+      a.click();
+    } else {
+      console.error("Image URL not found.");
+    }
+  }}
+>
+  <Download className="mr-2 h-4 w-4" />
+  Download Image
+</Button>
+
             </CardFooter>
           )}
         </Card>
