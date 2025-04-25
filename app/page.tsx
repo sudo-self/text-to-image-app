@@ -312,17 +312,18 @@ wget -O generated-image.png "${API_URL}?prompt=${encodeURIComponent(prompt)}"`
               </TabsContent>
               <TabsContent value="curl" className="mt-4">
                 <div className="relative">
-                  <pre className="bg-muted p-4 rounded-md overflow-x-auto text-sm">
-                    <code>
-                      {method === "POST"
-                        ? `curl -X POST ${API_URL} \\
-  -H "Content-Type: application/json" \\
-  -d '{"prompt":"${prompt}"}' \\
-  --output generated-image.png`
-                        : `curl "${API_URL}?prompt=${encodeURIComponent(prompt)}" \\
-  --output generated-image.png`}
-                    </code>
-                  </pre>
+          <pre className="bg-black text-gray-300 p-4 rounded-md overflow-x-auto text-sm font-mono">
+            <code>
+              {method === "POST"
+                ? `curl -X POST ${API_URL} \\
+            -H "Content-Type: application/json" \\
+            -d '{"prompt":"${prompt}"}' \\
+            --output generated-image.png`
+                : `curl "${API_URL}?prompt=${encodeURIComponent(prompt)}" \\
+            --output generated-image.png`}
+            </code>
+          </pre>
+
                   <Button
                     size="icon"
                     variant="ghost"
@@ -497,9 +498,10 @@ wget -O generated-image.png "${API_URL}?prompt=${encodeURIComponent(prompt)}"`
 
               <div className="relative">
                 <Label>Command</Label>
-                <pre className="mt-2 bg-muted p-4 rounded-md overflow-x-auto text-sm">
-                  <code>{getCommandOutput().replace(/\\\n\s+/g, " ")}</code>
-                </pre>
+          <pre className="mt-2 bg-black text-gray-300 p-4 rounded-md overflow-x-auto text-sm font-mono">
+            <code>{getCommandOutput().replace(/\\\n\s+/g, " ")}</code>
+          </pre>
+
                 <Button
                   size="icon"
                   variant="ghost"
