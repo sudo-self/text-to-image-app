@@ -462,8 +462,8 @@ wget -O generated-image.png "${API_URL}?prompt=${encodeURIComponent(prompt)}"`
       <div className="mt-8">
         <Card>
           <CardHeader>
-            <CardTitle>Command Line Syntax</CardTitle>
-            <CardDescription>Copy the command to use in your terminal</CardDescription>
+            <CardTitle>Command Line</CardTitle>
+            <CardDescription>Create a command for use in terminal</CardDescription>
           </CardHeader>
           <CardContent>
             <div className="space-y-6">
