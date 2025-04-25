@@ -423,14 +423,6 @@ wget -O generated-image.png "${API_URL}?prompt=${encodeURIComponent(prompt)}"`
                     <RadioGroupItem value="png" id="png" />
                     <Label htmlFor="png">PNG</Label>
                   </div>
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="jpg" id="jpg" />
-                    <Label htmlFor="jpg">JPG</Label>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="svg" id="svg" />
-                    <Label htmlFor="svg">SVG</Label>
-                  </div>
                 </RadioGroup>
               </div>
                         <Button
