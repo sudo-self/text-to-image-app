@@ -240,7 +240,6 @@ wget -O generated-image.png "${API_URL}?prompt=${encodeURIComponent(prompt)}"`
           <CardContent>
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="prompt">Text Prompt</Label>
                 <Textarea
                   id="prompt"
                   placeholder="Enter a description of the image you want to generate..."
@@ -250,7 +249,7 @@ wget -O generated-image.png "${API_URL}?prompt=${encodeURIComponent(prompt)}"`
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="method">Request Method</Label>
+                <Label htmlFor="method">Request Type</Label>
                 <Select value={method} onValueChange={setMethod}>
                   <SelectTrigger id="method">
                     <SelectValue placeholder="Select method" />
@@ -384,7 +383,7 @@ generated-image.png                   100%[=====================================
 
         <Card>
           <CardHeader>
-            <CardTitle>Response</CardTitle>
+            <CardTitle>Image</CardTitle>
             <CardDescription>The generated image will appear here</CardDescription>
           </CardHeader>
           <CardContent className="flex flex-col items-center justify-center min-h-[300px]">
