@@ -423,32 +423,23 @@ generated-image.png                   100%[=====================================
           {imageUrl && (
             <CardFooter className="flex flex-col space-y-4 w-full">
               <div className="w-full">
-                <Label className="mb-2 block">Export Format</Label>
                 <RadioGroup defaultValue="png" name="format" className="flex space-x-4">
                   <div className="flex items-center space-x-2">
                     <RadioGroupItem value="png" id="png" />
                     <Label htmlFor="png">PNG</Label>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="jpg" id="jpg" />
-                    <Label htmlFor="jpg">JPG</Label>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="svg" id="svg" />
-                    <Label htmlFor="svg">SVG</Label>
                   </div>
                 </RadioGroup>
               </div>
              <Button
   className="w-full"
   onClick={() => {
-    // Get the selected radio button in the RadioGroup
-    const radioGroup = document.querySelector('input[name="format"]:checked') as HTMLInputElement;
-    const selectedFormat = radioGroup ? radioGroup.value : "png"; // Default to 'png' if no format is selected
 
-    // Ensure the imageUrl is defined
+    const radioGroup = document.querySelector('input[name="format"]:checked') as HTMLInputElement;
+    const selectedFormat = radioGroup ? radioGroup.value : "png"; 
+
+
     if (imageUrl) {
-      // Download the image in the selected format
+   
       const a = document.createElement('a');
       a.href = imageUrl;
       a.download = `image.${selectedFormat}`;
