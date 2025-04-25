@@ -460,8 +460,8 @@ generated-image.png                   100%[=====================================
       <div className="mt-8">
         <Card>
           <CardHeader>
-            <CardTitle>Command Line Syntax</CardTitle>
-            <CardDescription>Copy the command to use in your terminal</CardDescription>
+            <CardTitle>Command Line</CardTitle>
+            <CardDescription>command to run in terminal</CardDescription>
           </CardHeader>
           <CardContent>
             <div className="space-y-6">
@@ -498,8 +498,8 @@ generated-image.png                   100%[=====================================
                         type="text"
                         ref={outputFileRef}
                         className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                        placeholder="generated-image.png"
-                        defaultValue="generated-image.png"
+                        placeholder="text-to-image.png"
+                        defaultValue="image.png"
                         onChange={(e) => setOutputFilename(e.target.value)}
                       />
                     </div>
