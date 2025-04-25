@@ -199,26 +199,21 @@ wget -O generated-image.png "${API_URL}?prompt=${encodeURIComponent(prompt)}"`
   }
 
   const getCommandOutput = () => {
-    const filename = outputFileRef.current?.value || "generated-image.png"
+    const filename = outputFilename || "generated-image.png"
 
     if (method === "POST") {
-      return `curl -X POST ${API_URL} \\
-  -H "Content-Type: application/json" \\
-  -d '{"prompt":"${prompt}"}' \\
-  --output ${filename}`
+      return `curl -X POST ${API_URL} -H "Content-Type: application/json" -d '{"prompt":"${prompt}"}' --output ${filename}`
     } else if (method === "GET") {
-      return `curl "${API_URL}?prompt=${encodeURIComponent(prompt)}" \\
-  --output ${filename}`
+      return `curl "${API_URL}?prompt=${encodeURIComponent(prompt)}" --output ${filename}`
     } else {
-      return `wget "${API_URL}?prompt=${encodeURIComponent(prompt)}" \\
-  -O ${filename}`
+      return `wget "${API_URL}?prompt=${encodeURIComponent(prompt)}" -O ${filename}`
     }
   }
 
   return (
     <div className="container mx-auto py-8 px-4">
-      <h1 className="text-3xl font-bold mb-6 text-center">Text-to-Image API Playground</h1>
-      <p className="text-center mb-8 text-muted-foreground">Interact with the cloudflared worker at {API_URL}</p>
+      <h1 className="text-3xl font-bold mb-6 text-center">Text-to-Image AI</h1>
+      <p className="text-center mb-8 text-muted-foreground">cloudflared workers {API_URL}</p>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         <Card>
@@ -488,8 +483,8 @@ generated-image.png                   100%[=====================================
       <div className="mt-8">
         <Card>
           <CardHeader>
-            <CardTitle>Command Line Syntax Builder</CardTitle>
-            <CardDescription>Customize and generate command line commands</CardDescription>
+            <CardTitle>Command Line Syntax</CardTitle>
+            <CardDescription>Copy the command to use in your terminal</CardDescription>
           </CardHeader>
           <CardContent>
             <div className="space-y-6">
@@ -536,9 +531,9 @@ generated-image.png                   100%[=====================================
               </div>
 
               <div className="relative">
-                <Label>Generated Command</Label>
+                <Label>Command</Label>
                 <pre className="mt-2 bg-muted p-4 rounded-md overflow-x-auto text-sm">
-                  <code>{getCommandOutput()}</code>
+                  <code>{getCommandOutput().replace(/\\\n\s+/g, " ")}</code>
                 </pre>
                 <Button
                   size="icon"
@@ -549,80 +544,6 @@ generated-image.png                   100%[=====================================
                   <Copy className="h-4 w-4" />
                   <span className="sr-only">Copy code</span>
                 </Button>
-              </div>
-
-              <div className="space-y-2">
-                <Label>Terminal Output Preview</Label>
-                <div className="bg-black text-green-400 p-4 rounded-md overflow-x-auto text-sm font-mono">
-                  {method === "POST" ? (
-                    <>
-                      <div>➜ curl -X POST {API_URL} \</div>
-                      <div>&nbsp;&nbsp;-H "Content-Type: application/json" \</div>
-                      <div>
-                        &nbsp;&nbsp;-d '{"{"}prompt: "{prompt}"{"}"}' \
-                      </div>
-                      <div>&nbsp;&nbsp;--output {outputFilename}</div>
-                      <div className="text-gray-500 mt-2">
-                        % Total&nbsp;&nbsp;&nbsp;&nbsp;% Received % Xferd&nbsp;&nbsp;Average
-                        Speed&nbsp;&nbsp;&nbsp;Time&nbsp;&nbsp;&nbsp;&nbsp;Time&nbsp;&nbsp;&nbsp;&nbsp;Time&nbsp;&nbsp;Current
-                      </div>
-                      <div className="text-gray-500">
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Dload&nbsp;&nbsp;Upload&nbsp;&nbsp;&nbsp;Total&nbsp;&nbsp;&nbsp;Spent&nbsp;&nbsp;&nbsp;Left&nbsp;&nbsp;Speed
-                      </div>
-                      <div className="text-gray-500">
-                        100 1708k&nbsp;&nbsp;100
-                        1708k&nbsp;&nbsp;100&nbsp;&nbsp;&nbsp;&nbsp;27&nbsp;&nbsp;&nbsp;138k&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2&nbsp;&nbsp;0:00:13&nbsp;&nbsp;0:00:12&nbsp;&nbsp;0:00:01&nbsp;&nbsp;400k
-                      </div>
-                    </>
-                  ) : method === "GET" ? (
-                    <>
-                      <div>
-                        ➜ curl "{API_URL}?prompt={encodeURIComponent(prompt)}" \
-                      </div>
-                      <div>&nbsp;&nbsp;--output {outputFilename}</div>
-                      <div className="text-gray-500 mt-2">
-                        % Total&nbsp;&nbsp;&nbsp;&nbsp;% Received % Xferd&nbsp;&nbsp;Average
-                        Speed&nbsp;&nbsp;&nbsp;Time&nbsp;&nbsp;&nbsp;&nbsp;Time&nbsp;&nbsp;&nbsp;&nbsp;Time&nbsp;&nbsp;Current
-                      </div>
-                      <div className="text-gray-500">
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Dload&nbsp;&nbsp;Upload&nbsp;&nbsp;&nbsp;Total&nbsp;&nbsp;&nbsp;Spent&nbsp;&nbsp;&nbsp;Left&nbsp;&nbsp;Speed
-                      </div>
-                      <div className="text-gray-500">
-                        100 1716k&nbsp;&nbsp;100
-                        1716k&nbsp;&nbsp;&nbsp;&nbsp;0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0&nbsp;&nbsp;&nbsp;159k&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0&nbsp;&nbsp;0:00:10&nbsp;&nbsp;0:00:10
-                        --:--:--&nbsp;&nbsp;365k
-                      </div>
-                    </>
-                  ) : (
-                    <>
-                      <div>
-                        ➜ wget "{API_URL}?prompt={encodeURIComponent(prompt)}" -O {outputFilename}
-                      </div>
-                      <div className="text-gray-500 mt-2">
-                        --2025-04-25 11:15:44-- {API_URL}?prompt={encodeURIComponent(prompt)}
-                      </div>
-                      <div className="text-gray-500">
-                        Resolving text-to-image.jessejesse.workers.dev (text-to-image.jessejesse.workers.dev)...
-                        104.21.41.67, 172.67.189.197
-                      </div>
-                      <div className="text-gray-500">
-                        Connecting to text-to-image.jessejesse.workers.dev
-                        (text-to-image.jessejesse.workers.dev)|104.21.41.67|:443... connected.
-                      </div>
-                      <div className="text-gray-500">HTTP request sent, awaiting response... 200 OK</div>
-                      <div className="text-gray-500">Length: 1290642 (1.2M) [image/png]</div>
-                      <div className="text-gray-500">Saving to: '{outputFilename}'</div>
-                      <div className="text-gray-500 mt-2">
-                        {outputFilename}
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;100%[=====================================================================&gt;]&nbsp;&nbsp;
-                        1.23M&nbsp;&nbsp;3.98MB/s&nbsp;&nbsp;&nbsp;&nbsp;in 0.3s
-                      </div>
-                      <div className="text-gray-500 mt-2">
-                        2025-04-25 11:15:54 (3.98 MB/s) - '{outputFilename}' saved [1290642/1290642]
-                      </div>
-                    </>
-                  )}
-                </div>
               </div>
             </div>
           </CardContent>
