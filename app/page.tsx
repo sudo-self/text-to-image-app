@@ -239,14 +239,14 @@ wget -O generated-image.png "${API_URL}?prompt=${encodeURIComponent(prompt)}"`
         <Card>
            <CardHeader>
             <CardTitle>Text</CardTitle>
-            <CardDescription>prompt to convert to image</CardDescription>
+            <CardDescription>a description of the image to generate</CardDescription>
           </CardHeader>
           <CardContent>
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="space-y-2">
                 <Textarea
                   id="prompt"
-                  placeholder="Enter a description of the image you want to generate..."
+                  placeholder="text..."
                   value={prompt}
                   onChange={(e) => setPrompt(e.target.value)}
                   className="min-h-[100px]"
