@@ -130,93 +130,92 @@ wget -O generated-image.png "${API_URL}?prompt=${encodeURIComponent(prompt)}"`
   }
 
   const downloadImage = (url: string, format: string) => {
-  // Create a new image element
-  const img = new Image()
-  img.crossOrigin = "anonymous" // Important for CORS
+    // Create a new image element
+    const img = new Image()
+    img.crossOrigin = "anonymous" // Important for CORS
 
-  // Set up event handlers before setting src
-  img.onload = () => {
-    try {
-      // Create canvas
-      const canvas = document.createElement("canvas")
-      canvas.width = img.width
-      canvas.height = img.height
-      const ctx = canvas.getContext("2d")
+    // Set up event handlers before setting src
+    img.onload = () => {
+      try {
+        // Create canvas
+        const canvas = document.createElement("canvas")
+        canvas.width = img.width
+        canvas.height = img.height
+        const ctx = canvas.getContext("2d")
 
-      if (!ctx) {
-        throw new Error("Could not create canvas context")
-      }
+        if (!ctx) {
+          throw new Error("Could not create canvas context")
+        }
 
-      // Draw image on canvas
-      ctx.drawImage(img, 0, 0)
+        // Draw image on canvas
+        ctx.drawImage(img, 0, 0)
 
-      // Prepare download
-      let downloadUrl
-      let filename = `generated-image-${Date.now()}`
+        // Prepare download
+        let downloadUrl
+        let filename = `generated-image-${Date.now()}`
 
-      // Convert to requested format
-      if (format === "png") {
-        downloadUrl = canvas.toDataURL("image/png")
-        filename += ".png"
-      } else if (format === "jpg") {
-        downloadUrl = canvas.toDataURL("image/jpeg", 0.9)
-        filename += ".jpg"
-      } else if (format === "svg") {
-        // Basic SVG wrapper around the image
-        const svgData = `
+        // Convert to requested format
+        if (format === "png") {
+          downloadUrl = canvas.toDataURL("image/png")
+          filename += ".png"
+        } else if (format === "jpg") {
+          downloadUrl = canvas.toDataURL("image/jpeg", 0.9)
+          filename += ".jpg"
+        } else if (format === "svg") {
+          // Basic SVG wrapper around the image
+          const svgData = `
           <svg xmlns="http://www.w3.org/2000/svg" width="${img.width}" height="${img.height}">
             <image width="${img.width}" height="${img.height}" href="${canvas.toDataURL("image/png")}" />
           </svg>
         `
-        const blob = new Blob([svgData], { type: "image/svg+xml" })
-        downloadUrl = URL.createObjectURL(blob)
-        filename += ".svg"
-      } else {
-        throw new Error(`Unsupported format: ${format}`)
-      }
-
-      // Create and trigger download link
-      const a = document.createElement("a")
-      a.href = downloadUrl
-      a.download = filename
-      document.body.appendChild(a)
-      a.click()
-
-      // Clean up
-      setTimeout(() => {
-        document.body.removeChild(a)
-        if (format === "svg") {
-          URL.revokeObjectURL(downloadUrl)
+          const blob = new Blob([svgData], { type: "image/svg+xml" })
+          downloadUrl = URL.createObjectURL(blob)
+          filename += ".svg"
+        } else {
+          throw new Error(`Unsupported format: ${format}`)
         }
-      }, 100)
 
+        // Create and trigger download link
+        const a = document.createElement("a")
+        a.href = downloadUrl
+        a.download = filename
+        document.body.appendChild(a)
+        a.click()
+
+        // Clean up
+        setTimeout(() => {
+          document.body.removeChild(a)
+          if (format === "svg") {
+            URL.revokeObjectURL(downloadUrl)
+          }
+        }, 100)
+
+        toast({
+          title: "Download started",
+          description: `Your image is being downloaded as ${format.toUpperCase()}`,
+        })
+      } catch (error) {
+        console.error("Download error:", error)
+        toast({
+          title: "Download failed",
+          description: error instanceof Error ? error.message : "Failed to download image",
+          variant: "destructive",
+        })
+      }
+    }
+
+    img.onerror = () => {
+      console.error("Image loading failed")
       toast({
-        title: "Download started",
-        description: `Your image is being downloaded as ${format.toUpperCase()}`,
-      })
-    } catch (error) {
-      console.error("Download error:", error)
-      toast({
-        title: "Download failed",
-        description: error instanceof Error ? error.message : "Failed to download image",
+        title: "Error",
+        description: "Failed to load image for download",
         variant: "destructive",
       })
     }
+
+    // Set the source to start loading
+    img.src = url
   }
-
-  img.onerror = () => {
-    console.error("Image loading failed")
-    toast({
-      title: "Error",
-      description: "Failed to load image for download",
-      variant: "destructive",
-    })
-  }
-
-
-  img.src = url
-}
-
 
   const getCommandOutput = () => {
     const filename = outputFilename || "generated-image.png"
@@ -237,23 +236,20 @@ wget -O generated-image.png "${API_URL}?prompt=${encodeURIComponent(prompt)}"`
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         <Card>
-           <CardHeader>
-            <CardTitle>Text</CardTitle>
-            <CardDescription>a description of the image to generate</CardDescription>
-          </CardHeader>
           <CardContent>
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="space-y-2">
+                <Label htmlFor="prompt">Text Prompt</Label>
                 <Textarea
                   id="prompt"
-                  placeholder="text..."
+                  placeholder="Enter a description of the image you want to generate..."
                   value={prompt}
                   onChange={(e) => setPrompt(e.target.value)}
                   className="min-h-[100px]"
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="method">Request Type</Label>
+                <Label htmlFor="method">Request Method</Label>
                 <Select value={method} onValueChange={setMethod}>
                   <SelectTrigger id="method">
                     <SelectValue placeholder="Select method" />
@@ -317,20 +313,12 @@ wget -O generated-image.png "${API_URL}?prompt=${encodeURIComponent(prompt)}"`
                   <pre className="bg-muted p-4 rounded-md overflow-x-auto text-sm">
                     <code>
                       {method === "POST"
-                        ? `➜ curl -X POST ${API_URL} \\
+                        ? `curl -X POST ${API_URL} \\
   -H "Content-Type: application/json" \\
   -d '{"prompt":"${prompt}"}' \\
-  --output generated-image.png
-
-  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
-                                 Dload  Upload   Total   Spent    Left  Speed
-100 1708k  100 1708k  100    27   138k      2  0:00:13  0:00:12  0:00:01  400k`
-                        : `➜ curl "${API_URL}?prompt=${encodeURIComponent(prompt)}" \\
-  --output generated-image.png
-
-  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
-                                 Dload  Upload   Total   Spent    Left  Speed
-100 1716k  100 1716k    0     0   159k      0  0:00:10  0:00:10 --:--:--  365k`}
+  --output generated-image.png`
+                        : `curl "${API_URL}?prompt=${encodeURIComponent(prompt)}" \\
+  --output generated-image.png`}
                     </code>
                   </pre>
                   <Button
@@ -353,20 +341,7 @@ wget -O generated-image.png "${API_URL}?prompt=${encodeURIComponent(prompt)}"`
               <TabsContent value="wget" className="mt-4">
                 <div className="relative">
                   <pre className="bg-muted p-4 rounded-md overflow-x-auto text-sm">
-                    <code>
-                      {`➜ wget "${API_URL}?prompt=${encodeURIComponent(prompt)}" -O generated-image.png
-
---2025-04-25 11:15:44--  ${API_URL}?prompt=${encodeURIComponent(prompt)}
-Resolving text-to-image.jessejesse.workers.dev (text-to-image.jessejesse.workers.dev)... 104.21.41.67, 172.67.189.197
-Connecting to text-to-image.jessejesse.workers.dev (text-to-image.jessejesse.workers.dev)|104.21.41.67|:443... connected.
-HTTP request sent, awaiting response... 200 OK
-Length: 1290642 (1.2M) [image/png]
-Saving to: 'generated-image.png'
-
-generated-image.png                   100%[=====================================================================>]   1.23M  3.98MB/s    in 0.3s    
-
-2025-04-25 11:15:54 (3.98 MB/s) - 'generated-image.png' saved [1290642/1290642]`}
-                    </code>
+                    <code>{`wget "${API_URL}?prompt=${encodeURIComponent(prompt)}" -O generated-image.png`}</code>
                   </pre>
                   <Button
                     size="icon"
@@ -387,7 +362,7 @@ generated-image.png                   100%[=====================================
 
         <Card>
           <CardHeader>
-            <CardTitle>Image</CardTitle>
+            <CardTitle>Response</CardTitle>
             <CardDescription>The generated image will appear here</CardDescription>
           </CardHeader>
           <CardContent className="flex flex-col items-center justify-center min-h-[300px]">
@@ -426,36 +401,36 @@ generated-image.png                   100%[=====================================
           {imageUrl && (
             <CardFooter className="flex flex-col space-y-4 w-full">
               <div className="w-full">
+                <Label className="mb-2 block">Export Format</Label>
                 <RadioGroup defaultValue="png" name="format" className="flex space-x-4">
                   <div className="flex items-center space-x-2">
                     <RadioGroupItem value="png" id="png" />
                     <Label htmlFor="png">PNG</Label>
                   </div>
+                  <div className="flex items-center space-x-2">
+                    <RadioGroupItem value="jpg" id="jpg" />
+                    <Label htmlFor="jpg">JPG</Label>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <RadioGroupItem value="svg" id="svg" />
+                    <Label htmlFor="svg">SVG</Label>
+                  </div>
                 </RadioGroup>
               </div>
-             <Button
-  className="w-full"
-  onClick={() => {
+              <Button
+                className="w-full"
+                onClick={() => {
+                  // Get all radio buttons in the RadioGroup
+                  const radioGroup = document.querySelector('input[name="format"]:checked') as HTMLInputElement
+                  const selectedFormat = radioGroup ? radioGroup.value : "png"
 
-    const radioGroup = document.querySelector('input[name="format"]:checked') as HTMLInputElement;
-    const selectedFormat = radioGroup ? radioGroup.value : "png"; 
-
-
-    if (imageUrl) {
-   
-      const a = document.createElement('a');
-      a.href = imageUrl;
-      a.download = `image.${selectedFormat}`;
-      a.click();
-    } else {
-      console.error("Image URL not found.");
-    }
-  }}
->
-  <Download className="mr-2 h-4 w-4" />
-  Download Image
-</Button>
-
+                  // Download the image
+                  downloadImage(imageUrl, selectedFormat)
+                }}
+              >
+                <Download className="mr-2 h-4 w-4" />
+                Download Image
+              </Button>
             </CardFooter>
           )}
         </Card>
@@ -464,8 +439,8 @@ generated-image.png                   100%[=====================================
       <div className="mt-8">
         <Card>
           <CardHeader>
-            <CardTitle>Command Line</CardTitle>
-            <CardDescription>command to run in terminal</CardDescription>
+            <CardTitle>Command Line Syntax</CardTitle>
+            <CardDescription>Copy the command to use in your terminal</CardDescription>
           </CardHeader>
           <CardContent>
             <div className="space-y-6">
@@ -502,8 +477,8 @@ generated-image.png                   100%[=====================================
                         type="text"
                         ref={outputFileRef}
                         className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                        placeholder="text-to-image.png"
-                        defaultValue="image.png"
+                        placeholder="generated-image.png"
+                        defaultValue="generated-image.png"
                         onChange={(e) => setOutputFilename(e.target.value)}
                       />
                     </div>
