@@ -103,7 +103,7 @@ export default function TextToImagePlayground() {
       return `fetch("${API_URL}", {
   method: "POST",
   headers: {
-    "Content-Type": "application/json"
+    "Content-Type: application/json"
   },
   body: JSON.stringify({
     prompt: "${prompt}"
@@ -130,72 +130,91 @@ wget -O generated-image.png "${API_URL}?prompt=${encodeURIComponent(prompt)}"`
   }
 
   const downloadImage = (url: string, format: string) => {
+    // Create a new image element
     const img = new Image()
-    img.crossOrigin = "anonymous"
-    img.src = url
+    img.crossOrigin = "anonymous" // Important for CORS
 
+    // Set up event handlers before setting src
     img.onload = () => {
-      const canvas = document.createElement("canvas")
-      canvas.width = img.width
-      canvas.height = img.height
-      const ctx = canvas.getContext("2d")
+      try {
+        // Create canvas
+        const canvas = document.createElement("canvas")
+        canvas.width = img.width
+        canvas.height = img.height
+        const ctx = canvas.getContext("2d")
 
-      if (!ctx) {
-        toast({
-          title: "Error",
-          description: "Could not create canvas context for image conversion",
-          variant: "destructive",
-        })
-        return
-      }
+        if (!ctx) {
+          throw new Error("Could not create canvas context")
+        }
 
-      // Draw image on canvas
-      ctx.drawImage(img, 0, 0)
+        // Draw image on canvas
+        ctx.drawImage(img, 0, 0)
 
-      let downloadUrl
-      let filename = `generated-image-${Date.now()}`
+        // Prepare download
+        let downloadUrl
+        let filename = `generated-image-${Date.now()}`
 
-      if (format === "png") {
-        downloadUrl = canvas.toDataURL("image/png")
-        filename += ".png"
-      } else if (format === "jpg") {
-        downloadUrl = canvas.toDataURL("image/jpeg", 0.9)
-        filename += ".jpg"
-      } else if (format === "svg") {
-        // Basic SVG conversion (very simplified)
-        const svgWidth = canvas.width
-        const svgHeight = canvas.height
-        const svgData = `
-          <svg xmlns="http://www.w3.org/2000/svg" width="${svgWidth}" height="${svgHeight}">
-            <image width="${svgWidth}" height="${svgHeight}" href="${canvas.toDataURL("image/png")}" />
+        // Convert to requested format
+        if (format === "png") {
+          downloadUrl = canvas.toDataURL("image/png")
+          filename += ".png"
+        } else if (format === "jpg") {
+          downloadUrl = canvas.toDataURL("image/jpeg", 0.9)
+          filename += ".jpg"
+        } else if (format === "svg") {
+          // Basic SVG wrapper around the image
+          const svgData = `
+          <svg xmlns="http://www.w3.org/2000/svg" width="${img.width}" height="${img.height}">
+            <image width="${img.width}" height="${img.height}" href="${canvas.toDataURL("image/png")}" />
           </svg>
         `
-        const blob = new Blob([svgData], { type: "image/svg+xml" })
-        downloadUrl = URL.createObjectURL(blob)
-        filename += ".svg"
-      }
+          const blob = new Blob([svgData], { type: "image/svg+xml" })
+          downloadUrl = URL.createObjectURL(blob)
+          filename += ".svg"
+        } else {
+          throw new Error(`Unsupported format: ${format}`)
+        }
 
-      // Create download link
-      const a = document.createElement("a")
-      a.href = downloadUrl
-      a.download = filename
-      document.body.appendChild(a)
-      a.click()
-      document.body.removeChild(a)
+        // Create and trigger download link
+        const a = document.createElement("a")
+        a.href = downloadUrl
+        a.download = filename
+        document.body.appendChild(a)
+        a.click()
 
-      // Clean up
-      if (format === "svg") {
-        URL.revokeObjectURL(downloadUrl)
+        // Clean up
+        setTimeout(() => {
+          document.body.removeChild(a)
+          if (format === "svg") {
+            URL.revokeObjectURL(downloadUrl)
+          }
+        }, 100)
+
+        toast({
+          title: "Download started",
+          description: `Your image is being downloaded as ${format.toUpperCase()}`,
+        })
+      } catch (error) {
+        console.error("Download error:", error)
+        toast({
+          title: "Download failed",
+          description: error instanceof Error ? error.message : "Failed to download image",
+          variant: "destructive",
+        })
       }
     }
 
     img.onerror = () => {
+      console.error("Image loading failed")
       toast({
         title: "Error",
-        description: "Failed to load image for conversion",
+        description: "Failed to load image for download",
         variant: "destructive",
       })
     }
+
+    // Set the source to start loading
+    img.src = url
   }
 
   const getCommandOutput = () => {
@@ -404,7 +423,7 @@ generated-image.png                   100%[=====================================
             <CardFooter className="flex flex-col space-y-4 w-full">
               <div className="w-full">
                 <Label className="mb-2 block">Export Format</Label>
-                <RadioGroup defaultValue="png" className="flex space-x-4">
+                <RadioGroup defaultValue="png" name="format" className="flex space-x-4">
                   <div className="flex items-center space-x-2">
                     <RadioGroupItem value="png" id="png" />
                     <Label htmlFor="png">PNG</Label>
@@ -422,19 +441,11 @@ generated-image.png                   100%[=====================================
               <Button
                 className="w-full"
                 onClick={() => {
-                  const radioButtons = document.querySelectorAll('input[type="radio"]')
-                  let selectedFormat = "png"
+                  // Get all radio buttons in the RadioGroup
+                  const radioGroup = document.querySelector('input[name="format"]:checked') as HTMLInputElement
+                  const selectedFormat = radioGroup ? radioGroup.value : "png"
 
-                  for (const button of radioButtons) {
-                    if (
-                      (button as HTMLInputElement).checked &&
-                      ["png", "jpg", "svg"].includes((button as HTMLInputElement).value)
-                    ) {
-                      selectedFormat = (button as HTMLInputElement).value
-                      break
-                    }
-                  }
-
+                  // Download the image
                   downloadImage(imageUrl, selectedFormat)
                 }}
               >
