@@ -231,33 +231,31 @@ wget -O generated-image.png "${API_URL}?prompt=${encodeURIComponent(prompt)}"`
     }
   }
 
-    return (
-      <div className="container mx-auto py-8 px-4">
-            <h1 className="text-3xl font-bold mb-6 text-center bg-gradient-to-r from-amber-500 to-sky-500 bg-clip-text text-transparent">
-              Text-to-Image
-            </h1>
+  return (
+    <div className="container mx-auto py-8 px-4">
+          <h1 className="text-3xl font-bold mb-6 text-center bg-gradient-to-r from-amber-500 to-sky-500 bg-clip-text text-transparent">
+            Text-to-Image
+          </h1>
 
-            <a
-              href="https://image.jessejesse.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-center mb-8 text-muted-foreground block hover:underline"
-            >
-              image.JesseJesse.com
-            </a>
+          <a
+            href="https://image.jessejesse.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-center mb-8 text-muted-foreground block hover:underline"
+          >
+            image.JesseJesse.com
+          </a>
 
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         <Card>
-          <CardTitle>Text</CardTitle>
-          <CardDescription>description of the image you want to generate</CardDescription>
-        </CardHeader>
           <CardContent>
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="space-y-2">
+                <Label htmlFor="prompt">Text Prompt</Label>
                 <Textarea
                   id="prompt"
-                  placeholder="Enter Text..."
+                  placeholder="Enter a description of the image you want to generate..."
                   value={prompt}
                   onChange={(e) => setPrompt(e.target.value)}
                   className="min-h-[100px]"
@@ -419,11 +417,19 @@ wget -O generated-image.png "${API_URL}?prompt=${encodeURIComponent(prompt)}"`
           {imageUrl && (
             <CardFooter className="flex flex-col space-y-4 w-full">
               <div className="w-full">
-                <Label className="mb-2 block">Export</Label>
+                <Label className="mb-2 block">Export Format</Label>
                 <RadioGroup defaultValue="png" name="format" className="flex space-x-4">
                   <div className="flex items-center space-x-2">
                     <RadioGroupItem value="png" id="png" />
-                    <Label htmlFor="png">.PNG</Label>
+                    <Label htmlFor="png">PNG</Label>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <RadioGroupItem value="jpg" id="jpg" />
+                    <Label htmlFor="jpg">JPG</Label>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <RadioGroupItem value="svg" id="svg" />
+                    <Label htmlFor="svg">SVG</Label>
                   </div>
                 </RadioGroup>
               </div>
@@ -456,8 +462,8 @@ wget -O generated-image.png "${API_URL}?prompt=${encodeURIComponent(prompt)}"`
       <div className="mt-8">
         <Card>
           <CardHeader>
-            <CardTitle>Command Line</CardTitle>
-            <CardDescription>command for use in terminal</CardDescription>
+            <CardTitle>Command Line Syntax</CardTitle>
+            <CardDescription>Copy the command to use in your terminal</CardDescription>
           </CardHeader>
           <CardContent>
             <div className="space-y-6">
