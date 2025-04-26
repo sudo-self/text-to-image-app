@@ -391,9 +391,8 @@ wget -O generated-image.png "${API_URL}?prompt=${encodeURIComponent(prompt)}"`;
 
         <Card>
           <CardHeader>
-            <CardTitle>Image</CardTitle>
             <CardDescription>
-              The generated image will appear here
+              generated image will appear here
             </CardDescription>
           </CardHeader>
           <CardContent className="flex flex-col items-center justify-center min-h-[300px]">
