@@ -1,48 +1,68 @@
 "use client";
 
-import type React from "react"
-import { useState } from "react"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Label } from "@/components/ui/label"
-import { Textarea } from "@/components/ui/textarea"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Code, Copy, Download, ImageIcon, Loader2, Terminal } from "lucide-react"
-import { useToast } from "@/hooks/use-toast"
-import Image from "next/image"
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
-import { useRef } from "react"
+import type React from "react";
+import { useState } from "react";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
+  Code,
+  Copy,
+  Download,
+  ImageIcon,
+  Loader2,
+  Terminal,
+} from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
+import Image from "next/image";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { useRef } from "react";
 
-const API_URL = "https://text-to-image.jessejesse.workers.dev"
+const API_URL = "https://text-to-image.jessejesse.workers.dev";
 
 export default function TextToImagePlayground() {
-  const [prompt, setPrompt] = useState("")
-  const [method, setMethod] = useState("POST")
-  const [loading, setLoading] = useState(false)
-  const [imageUrl, setImageUrl] = useState("")
-  const [error, setError] = useState("")
-  const [outputFilename, setOutputFilename] = useState("generated-image.png")
-  const { toast } = useToast()
-  const outputFileRef = useRef<HTMLInputElement>(null)
+  const [prompt, setPrompt] = useState("");
+  const [method, setMethod] = useState("POST");
+  const [loading, setLoading] = useState(false);
+  const [imageUrl, setImageUrl] = useState("");
+  const [error, setError] = useState("");
+  const [outputFilename, setOutputFilename] = useState("generated-image.png");
+  const { toast } = useToast();
+  const outputFileRef = useRef<HTMLInputElement>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
+    e.preventDefault();
     if (!prompt.trim()) {
       toast({
         title: "Error",
         description: "Please enter a prompt",
         variant: "destructive",
-      })
-      return
+      });
+      return;
     }
 
-    setLoading(true)
-    setError("")
-    setImageUrl("")
+    setLoading(true);
+    setError("");
+    setImageUrl("");
 
     try {
-      let response
+      let response;
 
       if (method === "POST") {
         response = await fetch(API_URL, {
@@ -51,51 +71,53 @@ export default function TextToImagePlayground() {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({ prompt }),
-        })
+        });
       } else {
-     
-        response = await fetch(`${API_URL}?prompt=${encodeURIComponent(prompt)}`)
+        response = await fetch(
+          `${API_URL}?prompt=${encodeURIComponent(prompt)}`,
+        );
       }
 
       if (!response.ok) {
-        throw new Error(`Error: ${response.status} ${response.statusText}`)
+        throw new Error(`Error: ${response.status} ${response.statusText}`);
       }
 
-     
-      const contentType = response.headers.get("content-type")
+      const contentType = response.headers.get("content-type");
       if (contentType && contentType.startsWith("image/")) {
-        const blob = await response.blob()
-        const url = URL.createObjectURL(blob)
-        setImageUrl(url)
+        const blob = await response.blob();
+        const url = URL.createObjectURL(blob);
+        setImageUrl(url);
       } else {
-       
-        const data = await response.json()
+        const data = await response.json();
         if (data.url) {
-          setImageUrl(data.url)
+          setImageUrl(data.url);
         } else {
-          throw new Error("Response did not contain an image or image URL")
+          throw new Error("Response did not contain an image or image URL");
         }
       }
     } catch (err) {
-      console.error(err)
-      setError(err instanceof Error ? err.message : "An unknown error occurred")
+      console.error(err);
+      setError(
+        err instanceof Error ? err.message : "An unknown error occurred",
+      );
       toast({
         title: "Error",
-        description: err instanceof Error ? err.message : "An unknown error occurred",
+        description:
+          err instanceof Error ? err.message : "An unknown error occurred",
         variant: "destructive",
-      })
+      });
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   const copyToClipboard = (text: string) => {
-    navigator.clipboard.writeText(text)
+    navigator.clipboard.writeText(text);
     toast({
       title: "Copied to clipboard",
       description: "The code has been copied to your clipboard",
-    })
-  }
+    });
+  };
 
   const getCodeExample = () => {
     if (method === "POST") {
@@ -113,7 +135,7 @@ export default function TextToImagePlayground() {
   const url = URL.createObjectURL(blob)
   console.log("Image URL:", url)
 })
-.catch(error => console.error("Error:", error))`
+.catch(error => console.error("Error:", error))`;
     } else if (method === "GET") {
       return `fetch("${API_URL}?prompt=${encodeURIComponent(prompt)}")
 .then(response => response.blob())
@@ -121,141 +143,127 @@ export default function TextToImagePlayground() {
   const url = URL.createObjectURL(blob)
   console.log("Image URL:", url)
 })
-.catch(error => console.error("Error:", error))`
+.catch(error => console.error("Error:", error))`;
     } else {
       return `# Using wget in terminal
-wget -O generated-image.png "${API_URL}?prompt=${encodeURIComponent(prompt)}"`
+wget -O generated-image.png "${API_URL}?prompt=${encodeURIComponent(prompt)}"`;
     }
-  }
+  };
 
+  const downloadImage = (url: string, format: string) => {
+    const img = new Image();
+    img.crossOrigin = "anonymous";
 
-          const downloadImage = (url: string, format: string) => {
-     
-            const img = new Image()
-            img.crossOrigin = "anonymous"
+    img.onload = () => {
+      try {
+        const canvas = document.createElement("canvas");
+        canvas.width = img.width;
+        canvas.height = img.height;
+        const ctx = canvas.getContext("2d");
 
-          
-            img.onload = () => {
-              try {
-              
-                const canvas = document.createElement("canvas")
-                canvas.width = img.width
-                canvas.height = img.height
-                const ctx = canvas.getContext("2d")
+        if (!ctx) {
+          throw new Error("Could not create canvas context");
+        }
 
-                if (!ctx) {
-                  throw new Error("Could not create canvas context")
-                }
+        ctx.drawImage(img, 0, 0);
 
-          
-                ctx.drawImage(img, 0, 0)
+        let downloadUrl;
+        let filename = `generated-image-${Date.now()}`;
 
-           
-                let downloadUrl
-                let filename = `generated-image-${Date.now()}`
-
-         
-                if (format === "png") {
-                  downloadUrl = canvas.toDataURL("image/png")
-                  filename += ".png"
-                } else if (format === "jpg") {
-                  downloadUrl = canvas.toDataURL("image/jpeg", 0.9)
-                  filename += ".jpg"
-                } else if (format === "svg") {
-             
-                  const svgData = `
+        if (format === "png") {
+          downloadUrl = canvas.toDataURL("image/png");
+          filename += ".png";
+        } else if (format === "jpg") {
+          downloadUrl = canvas.toDataURL("image/jpeg", 0.9);
+          filename += ".jpg";
+        } else if (format === "svg") {
+          const svgData = `
                     <svg xmlns="http://www.w3.org/2000/svg" width="${img.width}" height="${img.height}">
                       <image width="${img.width}" height="${img.height}" href="${canvas.toDataURL("image/png")}" />
                     </svg>
-                  `
-                  const blob = new Blob([svgData], { type: "image/svg+xml" })
-                  downloadUrl = URL.createObjectURL(blob)
-                  filename += ".svg"
-                } else {
-                  throw new Error(`Unsupported format: ${format}`)
-                }
+                  `;
+          const blob = new Blob([svgData], { type: "image/svg+xml" });
+          downloadUrl = URL.createObjectURL(blob);
+          filename += ".svg";
+        } else {
+          throw new Error(`Unsupported format: ${format}`);
+        }
 
-          
-                const a = document.createElement("a")
-                a.href = downloadUrl
-                a.download = filename
-                document.body.appendChild(a)
-                a.click()
+        const a = document.createElement("a");
+        a.href = downloadUrl;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
 
-         
-                setTimeout(() => {
-                  document.body.removeChild(a)
-                  if (format === "svg") {
-                    URL.revokeObjectURL(downloadUrl)
-                  }
-                }, 100)
-
-                toast({
-                  title: "Download started",
-                  description: `Your image is being downloaded as ${format.toUpperCase()}`,
-                })
-              } catch (error) {
-                console.error("Download error:", error)
-                toast({
-                  title: "Download failed",
-                  description: error instanceof Error ? error.message : "Failed to download image",
-                  variant: "destructive",
-                })
-              }
-            }
-
-            img.onerror = () => {
-              console.error("Image loading failed")
-              toast({
-                title: "Error",
-                description: "Failed to load image for download",
-                variant: "destructive",
-              })
-            }
-
-          
-            img.src = url
+        setTimeout(() => {
+          document.body.removeChild(a);
+          if (format === "svg") {
+            URL.revokeObjectURL(downloadUrl);
           }
+        }, 100);
 
+        toast({
+          title: "Download started",
+          description: `Your image is being downloaded as ${format.toUpperCase()}`,
+        });
+      } catch (error) {
+        console.error("Download error:", error);
+        toast({
+          title: "Download failed",
+          description:
+            error instanceof Error ? error.message : "Failed to download image",
+          variant: "destructive",
+        });
+      }
+    };
+
+    img.onerror = () => {
+      console.error("Image loading failed");
+      toast({
+        title: "Error",
+        description: "Failed to load image for download",
+        variant: "destructive",
+      });
+    };
+
+    img.src = url;
+  };
 
   const getCommandOutput = () => {
-    const filename = outputFilename || "generated-image.png"
+    const filename = outputFilename || "generated-image.png";
 
     if (method === "POST") {
-      return `curl -X POST ${API_URL} -H "Content-Type: application/json" -d '{"prompt":"${prompt}"}' --output ${filename}`
+      return `curl -X POST ${API_URL} -H "Content-Type: application/json" -d '{"prompt":"${prompt}"}' --output ${filename}`;
     } else if (method === "GET") {
-      return `curl "${API_URL}?prompt=${encodeURIComponent(prompt)}" --output ${filename}`
+      return `curl "${API_URL}?prompt=${encodeURIComponent(prompt)}" --output ${filename}`;
     } else {
-      return `wget "${API_URL}?prompt=${encodeURIComponent(prompt)}" -O ${filename}`
+      return `wget "${API_URL}?prompt=${encodeURIComponent(prompt)}" -O ${filename}`;
     }
-  }
+  };
 
   return (
     <div className="container mx-auto py-8 px-4">
-<div className="container mx-auto py-8 px-4">
-  <div className="flex justify-center mb-2">
-    <img src="/texttoimage.svg" alt="text2image" className="h-32 block" />
-  </div>
+      <div className="container mx-auto py-8 px-4">
+        <div className="flex justify-center mb-2">
+          <img src="/texttoimage.svg" alt="text2image" className="h-32 block" />
+        </div>
 
-  <a
-    href="https://image.jessejesse.com"
-    target="_blank"
-    rel="noopener noreferrer"
-    className="text-center mb-8 block text-transparent bg-clip-text bg-gradient-to-r from-blue-700 via-purple-700 to-pink-700 hover:underline"
-  >
-    image.JesseJesse.com
-  </a>
-</div>
-
-
-
+        <a
+          href="https://image.jessejesse.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-center mb-8 block text-transparent bg-clip-text bg-gradient-to-r from-blue-700 via-purple-700 to-pink-700 hover:underline"
+        >
+          image.JesseJesse.com
+        </a>
+      </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         <Card>
           <CardContent>
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="space-y-2">
-               <br />
+                <br />
                 <Textarea
                   id="prompt"
                   placeholder="Enter a description of the image you want to generate..."
@@ -310,9 +318,9 @@ wget -O generated-image.png "${API_URL}?prompt=${encodeURIComponent(prompt)}"`
               </TabsList>
               <TabsContent value="code" className="mt-4">
                 <div className="relative">
-          <pre className="bg-black text-gray-300 p-4 rounded-md overflow-x-auto text-sm font-mono">
-            <code>{getCodeExample()}</code>
-          </pre>
+                  <pre className="bg-black text-gray-300 p-4 rounded-md overflow-x-auto text-sm font-mono">
+                    <code>{getCodeExample()}</code>
+                  </pre>
 
                   <Button
                     size="icon"
@@ -327,17 +335,17 @@ wget -O generated-image.png "${API_URL}?prompt=${encodeURIComponent(prompt)}"`
               </TabsContent>
               <TabsContent value="curl" className="mt-4">
                 <div className="relative">
-          <pre className="bg-black text-gray-300 p-4 rounded-md overflow-x-auto text-sm font-mono">
-            <code>
-              {method === "POST"
-                ? `curl -X POST ${API_URL} \\
+                  <pre className="bg-black text-gray-300 p-4 rounded-md overflow-x-auto text-sm font-mono">
+                    <code>
+                      {method === "POST"
+                        ? `curl -X POST ${API_URL} \\
             -H "Content-Type: application/json" \\
             -d '{"prompt":"${prompt}"}' \\
             --output generated-image.png`
-                : `curl "${API_URL}?prompt=${encodeURIComponent(prompt)}" \\
+                        : `curl "${API_URL}?prompt=${encodeURIComponent(prompt)}" \\
             --output generated-image.png`}
-            </code>
-          </pre>
+                    </code>
+                  </pre>
 
                   <Button
                     size="icon"
@@ -358,16 +366,18 @@ wget -O generated-image.png "${API_URL}?prompt=${encodeURIComponent(prompt)}"`
               </TabsContent>
               <TabsContent value="wget" className="mt-4">
                 <div className="relative">
-          <pre className="bg-black p-4 rounded-md overflow-x-auto text-sm text-gray-300">
-            <code>{`wget "${API_URL}?prompt=${encodeURIComponent(prompt)}" -O generated-image.png`}</code>
-          </pre>
+                  <pre className="bg-black p-4 rounded-md overflow-x-auto text-sm text-gray-300">
+                    <code>{`wget "${API_URL}?prompt=${encodeURIComponent(prompt)}" -O generated-image.png`}</code>
+                  </pre>
 
                   <Button
                     size="icon"
                     variant="ghost"
                     className="absolute top-2 right-2"
                     onClick={() =>
-                      copyToClipboard(`wget "${API_URL}?prompt=${encodeURIComponent(prompt)}" -O generated-image.png`)
+                      copyToClipboard(
+                        `wget "${API_URL}?prompt=${encodeURIComponent(prompt)}" -O generated-image.png`,
+                      )
                     }
                   >
                     <Copy className="h-4 w-4" />
@@ -382,13 +392,17 @@ wget -O generated-image.png "${API_URL}?prompt=${encodeURIComponent(prompt)}"`
         <Card>
           <CardHeader>
             <CardTitle>Image</CardTitle>
-            <CardDescription>The generated image will appear here</CardDescription>
+            <CardDescription>
+              The generated image will appear here
+            </CardDescription>
           </CardHeader>
           <CardContent className="flex flex-col items-center justify-center min-h-[300px]">
             {loading ? (
               <div className="flex flex-col items-center justify-center p-8">
                 <Loader2 className="h-16 w-16 animate-spin text-muted-foreground" />
-                <p className="mt-4 text-muted-foreground">Generating image...</p>
+                <p className="mt-4 text-muted-foreground">
+                  Generating image...
+                </p>
               </div>
             ) : error ? (
               <div className="text-center p-8 text-destructive">
@@ -406,7 +420,9 @@ wget -O generated-image.png "${API_URL}?prompt=${encodeURIComponent(prompt)}"`
                     className="object-contain"
                   />
                 </div>
-                <p className="mt-4 text-sm text-muted-foreground text-center max-w-md">{prompt}</p>
+                <p className="mt-4 text-sm text-muted-foreground text-center max-w-md">
+                  {prompt}
+                </p>
               </div>
             ) : (
               <div className="flex flex-col items-center justify-center p-8 text-center">
@@ -421,34 +437,41 @@ wget -O generated-image.png "${API_URL}?prompt=${encodeURIComponent(prompt)}"`
             <CardFooter className="flex flex-col space-y-4 w-full">
               <div className="w-full">
                 <Label className="mb-2 block">Export Format</Label>
-                <RadioGroup defaultValue="png" name="format" className="flex space-x-4">
+                <RadioGroup
+                  defaultValue="png"
+                  name="format"
+                  className="flex space-x-4"
+                >
                   <div className="flex items-center space-x-2">
                     <RadioGroupItem value="png" id="png" />
                     <Label htmlFor="png">PNG</Label>
                   </div>
                 </RadioGroup>
               </div>
-                        <Button
-                          className="w-full"
-                          onClick={async () => {
-                            const radioGroup = document.querySelector('input[name="format"]:checked') as HTMLInputElement
-                            const selectedFormat = radioGroup ? radioGroup.value : "png"
+              <Button
+                className="w-full"
+                onClick={async () => {
+                  const radioGroup = document.querySelector(
+                    'input[name="format"]:checked',
+                  ) as HTMLInputElement;
+                  const selectedFormat = radioGroup ? radioGroup.value : "png";
 
-                            const res = await fetch(imageUrl)
-                            const blob = await res.blob()
-                            const blobUrl = URL.createObjectURL(new Blob([blob], { type: `image/${selectedFormat}` }))
-                            
-                            const a = document.createElement("a")
-                            a.href = blobUrl
-                            a.download = `download.${selectedFormat}`
-                            a.click()
-                            URL.revokeObjectURL(blobUrl)
-                          }}
-                        >
-                          <Download className="mr-2 h-4 w-4" />
-                          Download Image
-                        </Button>
+                  const res = await fetch(imageUrl);
+                  const blob = await res.blob();
+                  const blobUrl = URL.createObjectURL(
+                    new Blob([blob], { type: `image/${selectedFormat}` }),
+                  );
 
+                  const a = document.createElement("a");
+                  a.href = blobUrl;
+                  a.download = `download.${selectedFormat}`;
+                  a.click();
+                  URL.revokeObjectURL(blobUrl);
+                }}
+              >
+                <Download className="mr-2 h-4 w-4" />
+                Download Image
+              </Button>
             </CardFooter>
           )}
         </Card>
@@ -506,15 +529,17 @@ wget -O generated-image.png "${API_URL}?prompt=${encodeURIComponent(prompt)}"`
 
               <div className="relative">
                 <Label>Command</Label>
-          <pre className="mt-2 bg-black text-gray-300 p-4 rounded-md overflow-x-auto text-sm font-mono">
-            <code>{getCommandOutput().replace(/\\\n\s+/g, " ")}</code>
-          </pre>
+                <pre className="mt-2 bg-black text-gray-300 p-4 rounded-md overflow-x-auto text-sm font-mono">
+                  <code>{getCommandOutput().replace(/\\\n\s+/g, " ")}</code>
+                </pre>
 
                 <Button
                   size="icon"
                   variant="ghost"
                   className="absolute top-2 right-2"
-                  onClick={() => copyToClipboard(getCommandOutput().replace(/\\\n\s+/g, " "))}
+                  onClick={() =>
+                    copyToClipboard(getCommandOutput().replace(/\\\n\s+/g, " "))
+                  }
                 >
                   <Copy className="h-4 w-4" />
                   <span className="sr-only">Copy</span>
@@ -523,7 +548,12 @@ wget -O generated-image.png "${API_URL}?prompt=${encodeURIComponent(prompt)}"`
             </div>
           </CardContent>
           <CardFooter>
-            <Button onClick={() => copyToClipboard(getCommandOutput().replace(/\\\n\s+/g, " "))} className="w-full">
+            <Button
+              onClick={() =>
+                copyToClipboard(getCommandOutput().replace(/\\\n\s+/g, " "))
+              }
+              className="w-full"
+            >
               <Copy className="mr-2 h-4 w-4" />
               Copy
             </Button>
@@ -531,8 +561,7 @@ wget -O generated-image.png "${API_URL}?prompt=${encodeURIComponent(prompt)}"`
         </Card>
       </div>
     </div>
-  )
-}
+  );
 
 
 
