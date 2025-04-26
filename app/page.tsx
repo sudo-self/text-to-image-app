@@ -242,20 +242,22 @@ wget -O generated-image.png "${API_URL}?prompt=${encodeURIComponent(prompt)}"`;
   };
 
   return (
+  <>
     <div className="container mx-auto py-8 px-4">
-        <div className="flex justify-center mb-2">
-          <img src="/texttoimage.svg" alt="text2image" className="h-52" />
-        </div>
-
-        <a
-          href="https://image.jessejesse.com"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-center mb-8 block text-transparent bg-clip-text bg-gradient-to-r from-blue-700 via-purple-700 to-pink-700 hover:underline"
-        >
-          image.JesseJesse.com
-        </a>
+      <div className="flex justify-center mb-2">
+        <img src="/texttoimage.svg" alt="text2image" className="h-52" />
       </div>
+
+      <a
+        href="https://image.jessejesse.com"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="text-center mb-8 block text-transparent bg-clip-text bg-gradient-to-r from-blue-700 via-purple-700 to-pink-700 hover:underline"
+      >
+        image.JesseJesse.com
+      </a>
+    </div>
+
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         <Card>
