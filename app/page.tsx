@@ -258,7 +258,7 @@ wget -O generated-image.png "${API_URL}?prompt=${encodeURIComponent(prompt)}"`;
         </a>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 bg-gray-100">
         <Card>
           <CardContent>
             <form onSubmit={handleSubmit} className="space-y-4">
