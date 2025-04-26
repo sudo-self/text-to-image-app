@@ -243,7 +243,7 @@ wget -O generated-image.png "${API_URL}?prompt=${encodeURIComponent(prompt)}"`;
 
   return (
     <div className="container mx-auto py-8 px-4 bg-gray-100">
-      <div className="container mx-auto py-8 px-4 bg-gray-100">
+      
         <div className="flex justify-center mb-2">
           <img src="/texttoimage.svg" alt="text2image" className="h-52 block" />
         </div>
@@ -256,7 +256,6 @@ wget -O generated-image.png "${API_URL}?prompt=${encodeURIComponent(prompt)}"`;
         >
           image.JesseJesse.com
         </a>
-      </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 bg-gray-100">
         <Card>
