@@ -242,7 +242,7 @@ wget -O generated-image.png "${API_URL}?prompt=${encodeURIComponent(prompt)}"`;
   };
 
   return (
-    <div className="container mx-auto py-8 px-4">
+    <div className="container mx-auto py-8 px-4 bg-black">
       <div className="container mx-auto py-8 px-4 bg-gray-100">
         <div className="flex justify-center mb-2">
           <img src="/texttoimage.svg" alt="text2image" className="h-52 block" />
