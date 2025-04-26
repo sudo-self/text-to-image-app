@@ -1,3 +1,5 @@
+"use client";
+
 
 export const generateMetadata = async () => {
   return {
@@ -24,7 +26,7 @@ export const generateMetadata = async () => {
   };
 };
 
-"use client"
+
 
 import type React from "react"
 
