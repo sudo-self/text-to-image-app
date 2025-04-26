@@ -513,7 +513,7 @@ wget -O generated-image.png "${API_URL}?prompt=${encodeURIComponent(prompt)}"`
                   onClick={() => copyToClipboard(getCommandOutput().replace(/\\\n\s+/g, " "))}
                 >
                   <Copy className="h-4 w-4" />
-                  <span className="sr-only">Copy code</span>
+                  <span className="sr-only">Copy</span>
                 </Button>
               </div>
             </div>
@@ -521,7 +521,7 @@ wget -O generated-image.png "${API_URL}?prompt=${encodeURIComponent(prompt)}"`
           <CardFooter>
             <Button onClick={() => copyToClipboard(getCommandOutput().replace(/\\\n\s+/g, " "))} className="w-full">
               <Copy className="mr-2 h-4 w-4" />
-              Copy Command
+              Copy
             </Button>
           </CardFooter>
         </Card>
