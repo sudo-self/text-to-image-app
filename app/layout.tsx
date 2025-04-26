@@ -7,8 +7,8 @@ import { Toaster } from "@/components/ui/toaster"
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata = {
-  title: "Text-to-Image API Playground",
-  description: "Interact with the text-to-image cloudflared worker API",
+  title: "image.JesseJesse.com",
+  description: "text-to-image cloudflared workers AI stable diffusion",
     generator: 'v0.dev'
 }
 
