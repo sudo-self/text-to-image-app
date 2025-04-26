@@ -354,7 +354,7 @@ wget -O generated-image.png "${API_URL}?prompt=${encodeURIComponent(prompt)}"`
               </TabsContent>
               <TabsContent value="wget" className="mt-4">
                 <div className="relative">
-          <pre className="bg-black p-4 rounded-md overflow-x-auto text-sm text-gray-400">
+          <pre className="bg-black p-4 rounded-md overflow-x-auto text-sm text-gray-300">
             <code>{`wget "${API_URL}?prompt=${encodeURIComponent(prompt)}" -O generated-image.png`}</code>
           </pre>
 
