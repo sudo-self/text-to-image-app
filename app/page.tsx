@@ -489,7 +489,7 @@ wget -O generated-image.png "${API_URL}?prompt=${encodeURIComponent(prompt)}"`;
                   <Label htmlFor="cmd-prompt">Text Prompt</Label>
                   <Textarea
                     id="cmd-prompt"
-                    placeholder="Enter your prompt..."
+                    placeholder="text description of image..."
                     value={prompt}
                     onChange={(e) => setPrompt(e.target.value)}
                     className="min-h-[80px]"
