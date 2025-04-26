@@ -234,7 +234,7 @@ wget -O generated-image.png "${API_URL}?prompt=${encodeURIComponent(prompt)}"`
     <div className="container mx-auto py-8 px-4">
 <div className="container mx-auto py-8 px-4">
   <div className="flex justify-center mb-2">
-    <img src="/texttoimage.svg" alt="text2image" className="h-28 block" />
+    <img src="/texttoimage.svg" alt="text2image" className="h-32 block" />
   </div>
 
   <a
@@ -255,7 +255,7 @@ wget -O generated-image.png "${API_URL}?prompt=${encodeURIComponent(prompt)}"`
           <CardContent>
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="prompt">Text Prompt</Label>
+               <br />
                 <Textarea
                   id="prompt"
                   placeholder="Enter a description of the image you want to generate..."
