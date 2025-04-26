@@ -1,7 +1,7 @@
 {
-  "name": "Text-2-Image",
-  "short_name": "T2I",
-  "description": "A text to image generator powered by cloudflared workers",
+  "name": "image.JesseJesse.com",
+  "short_name": "T2image",
+  "description": "text to image cloudflared workers AI playground",
   "start_url": "https://image.JesseJesse.com",
   "display": "standalone",
   "background_color": "#ffffff",
