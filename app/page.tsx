@@ -242,7 +242,7 @@ wget -O generated-image.png "${API_URL}?prompt=${encodeURIComponent(prompt)}"`
       {/* Header with theme toggle and GitHub link */}
       <header className="border-b">
         <div className="container mx-auto py-4 px-4 flex justify-between items-center">
-          <h1 className="text-xl font-bold">Text-to-Image</h1>
+          <h1 className="text-xl font-bold">text-to-image</h1>
           <div className="flex items-center space-x-4">
             <a
               href="https://github.com/sudo-self/text-to-image-app"
