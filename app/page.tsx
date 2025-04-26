@@ -248,7 +248,7 @@ wget -O generated-image.png "${API_URL}?prompt=${encodeURIComponent(prompt)}"`;
           <img src="/imagejesse.svg" alt="imagejesse" className="h-52 block" />
         </div>
 
-        
+        <a
           href="https://image.jessejesse.com"
           target="_blank"
           rel="noopener noreferrer"
@@ -562,6 +562,32 @@ wget -O generated-image.png "${API_URL}?prompt=${encodeURIComponent(prompt)}"`;
     </div>
   );
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
