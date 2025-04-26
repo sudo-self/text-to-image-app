@@ -79,7 +79,7 @@ export default function TextToImagePlayground() {
           body: JSON.stringify({ prompt }),
         })
       } else {
-        // For GET and WGET, we'll use GET request
+     
         response = await fetch(`${API_URL}?prompt=${encodeURIComponent(prompt)}`)
       }
 
@@ -87,14 +87,14 @@ export default function TextToImagePlayground() {
         throw new Error(`Error: ${response.status} ${response.statusText}`)
       }
 
-      // Check if the response is an image
+     
       const contentType = response.headers.get("content-type")
       if (contentType && contentType.startsWith("image/")) {
         const blob = await response.blob()
         const url = URL.createObjectURL(blob)
         setImageUrl(url)
       } else {
-        // If it's not an image, try to parse as JSON
+       
         const data = await response.json()
         if (data.url) {
           setImageUrl(data.url)
@@ -239,7 +239,7 @@ wget -O generated-image.png "${API_URL}?prompt=${encodeURIComponent(prompt)}"`
               })
             }
 
-            // Set the source to start loading
+          
             img.src = url
           }
 
