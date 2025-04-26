@@ -235,6 +235,9 @@ wget -O generated-image.png "${API_URL}?prompt=${encodeURIComponent(prompt)}"`
           <h1 className="text-3xl font-bold mb-6 text-center bg-gradient-to-r from-amber-700 to-sky-700 bg-clip-text text-transparent">
             Text-2-Image
           </h1>
+     <div className="flex justify-center mb-6">
+          <img src="/StableDiffusion.svg" alt="Stable Diffusion Logo" className="h-16" />
+    </div>
 
           <a
             href="https://image.jessejesse.com"
@@ -529,3 +532,13 @@ wget -O generated-image.png "${API_URL}?prompt=${encodeURIComponent(prompt)}"`
     </div>
   )
 }
+
+
+
+
+
+
+
+
+
+
