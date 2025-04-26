@@ -236,7 +236,7 @@ wget -O generated-image.png "${API_URL}?prompt=${encodeURIComponent(prompt)}"`
             Text-2-Image
           </h1>
      <div className="flex justify-center mb-6">
-          <img src="/StableDiffusion.svg" alt="Stable Diffusion Logo" className="h-16" />
+          <img src="/Stable-Diffusion.svg" alt="Stable Diffusion Logo" className="h-16" />
     </div>
 
           <a
