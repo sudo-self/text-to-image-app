@@ -1,3 +1,29 @@
+
+export const generateMetadata = async () => {
+  return {
+    title: "Text-to-Image API Playground",
+    description: "Interact with the text-to-image Cloudflare Worker API",
+    generator: "Cloudflared Workers",
+    keywords: ["text-to-image", "Cloudflare Workers", "AI", "Stable Diffusion"],
+    openGraph: {
+      title: "text-to-image",
+      description: "Create AI-generated images using a Cloudflare Worker.",
+      url: "https://text-to-image.jessejesse.workers.dev",
+      siteName: "image.JesseJesse.com",
+      images: [
+        {
+          url: "/og.png",
+          width: 1200,
+          height: 630,
+          alt: "Text-to-Image Playground Screenshot",
+        },
+      ],
+      locale: "en_US",
+      type: "website",
+    },
+  };
+};
+
 "use client"
 
 import type React from "react"
