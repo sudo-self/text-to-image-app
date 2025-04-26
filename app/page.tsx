@@ -232,21 +232,19 @@ wget -O generated-image.png "${API_URL}?prompt=${encodeURIComponent(prompt)}"`
 
   return (
     <div className="container mx-auto py-8 px-4">
-          <h1 className="text-3xl font-bold mb-6 text-center bg-gradient-to-r from-amber-700 to-sky-700 bg-clip-text text-transparent">
-          JesseJesse.workers.dev
-          </h1>
      <div className="flex justify-center mb-6">
           <img src="/text2image.svg" alt="text2image" className="h-18" />
     </div>
 
-          <a
-            href="https://image.jessejesse.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-center mb-8 text-muted-foreground block hover:underline"
-          >
-            image.JesseJesse.com
-          </a>
+        <a
+  href="https://image.jessejesse.com"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="text-center mb-8 block text-transparent bg-clip-text bg-gradient-to-r from-blue-700 via-purple-700 to-pink-700 hover:underline"
+>
+  image.JesseJesse.com
+</a>
+
 
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
