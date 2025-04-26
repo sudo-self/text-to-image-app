@@ -562,6 +562,7 @@ wget -O generated-image.png "${API_URL}?prompt=${encodeURIComponent(prompt)}"`;
       </div>
     </div>
   );
+}
 
 
 
