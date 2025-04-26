@@ -245,10 +245,10 @@ wget -O generated-image.png "${API_URL}?prompt=${encodeURIComponent(prompt)}"`;
     <div className="container mx-auto py-8 px-4 bg-gray-100">
       <div className="container mx-auto py-8 px-4 bg-gray-100">
         <div className="flex justify-center mb-2">
-          <img src="/picsvg_download-6.svg" alt="picsvg_download-6" className="h-52 block" />
+          <img src="/imagejesse.svg" alt="imagejesse" className="h-52 block" />
         </div>
 
-        <a
+        
           href="https://image.jessejesse.com"
           target="_blank"
           rel="noopener noreferrer"
