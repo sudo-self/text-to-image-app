@@ -266,7 +266,7 @@ wget -O generated-image.png "${API_URL}?prompt=${encodeURIComponent(prompt)}"`;
                 <br />
                 <Textarea
                   id="prompt"
-                  placeholder="Enter a description of the image you want to generate..."
+                  placeholder="text description of the image to generate..."
                   value={prompt}
                   onChange={(e) => setPrompt(e.target.value)}
                   className="min-h-[100px]"
