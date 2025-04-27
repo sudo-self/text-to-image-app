@@ -299,7 +299,7 @@ export default function TextToImagePlayground() {
                 <br />
                 <Textarea
                   id="prompt"
-                  placeholder="text description of the image"
+                  placeholder="A text description of the image"
                   value={prompt}
                   onChange={(e) => setPrompt(e.target.value)}
                   className="min-h-[100px]"
@@ -393,7 +393,7 @@ export default function TextToImagePlayground() {
                     }
                   >
                     <Copy className="h-4 w-4" />
-                    <span className="sr-only">Copy code</span>
+                    <span className="sr-only">Copy</span>
                   </Button>
                 </div>
               </TabsContent>
@@ -414,7 +414,7 @@ export default function TextToImagePlayground() {
                     }
                   >
                     <Copy className="h-4 w-4" />
-                    <span className="sr-only">Copy code</span>
+                    <span className="sr-only">Copy</span>
                   </Button>
                 </div>
               </TabsContent>
@@ -460,7 +460,7 @@ export default function TextToImagePlayground() {
               <div className="flex flex-col items-center justify-center p-8 text-center">
                 <ImageIcon className="h-16 w-16 text-muted-foreground" />
                 <p className="mt-4 text-muted-foreground">
-                  Enter a text description and click "Generate Image" to see the result
+                  A text description and select generate image to see the result
                 </p>
               </div>
             )}
