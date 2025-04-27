@@ -248,9 +248,20 @@ wget -O generated-image.png "${API_URL}?prompt=${encodeURIComponent(prompt)}"`;
   return (
     <div className="container mx-auto py-8 px-4 bg-gray-100">
       <div className="container mx-auto py-8 px-4 bg-gray-100">
-        <div className="flex justify-center mb-2">
-          <img src="/imagejesse.svg" alt="imagejesse" className="h-52 block" />
-          <div className="flex flex-col items-start space-y-2">
+          <div className="flex justify-center mb-2">
+            <img src="/imagejesse.svg" alt="imagejesse" className="h-52 block" />
+          </div>
+
+          <a
+            href="https://image.jessejesse.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-center mb-4 block text-transparent bg-clip-text bg-gradient-to-r from-blue-700 via-purple-700 to-pink-700 hover:underline"
+          >
+            image.JesseJesse.com
+          </a>
+
+          <div className="flex justify-center space-x-4 mb-8">
             <GitHubButton
               href="https://github.com/sudo-self/text-to-image-app"
               data-size="large"
@@ -268,18 +279,6 @@ wget -O generated-image.png "${API_URL}?prompt=${encodeURIComponent(prompt)}"`;
               @sudo-self
             </GitHubButton>
           </div>
-
-        </div>
-
-        <a
-          href="https://image.jessejesse.com"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-center mb-8 block text-transparent bg-clip-text bg-gradient-to-r from-blue-700 via-purple-700 to-pink-700 hover:underline"
-        >
-          image.JesseJesse.com
-        </a>
-      </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 bg-gray-100">
         <Card>
