@@ -525,10 +525,10 @@ export default function TextToImagePlayground() {
                 </div>
                 <div className="space-y-4">
                   <div className="space-y-2">
-                    <Label htmlFor="cmd-method">HTTP Request</Label>
+                    <Label htmlFor="cmd-method">Command Type</Label>
                     <Select value={method} onValueChange={setMethod}>
                       <SelectTrigger id="cmd-method">
-                        <SelectValue placeholder="Request Type" />
+                        <SelectValue placeholder="Select method" />
                       </SelectTrigger>
                       <SelectContent>
                         <SelectItem value="POST">cURL POST</SelectItem>
