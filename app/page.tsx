@@ -301,7 +301,7 @@ export default function TextToImagePlayground() {
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="method">Request Type</Label>
+                <Label htmlFor="method">HTTP Request</Label>
                 <Select value={method} onValueChange={setMethod}>
                   <SelectTrigger id="method">
                     <SelectValue placeholder="Select method" />
@@ -346,7 +346,7 @@ export default function TextToImagePlayground() {
               </TabsList>
               <TabsContent value="code" className="mt-4">
                 <div className="relative">
-                  <pre className="bg-black text-gray-300 p-4 rounded-md overflow-x-auto text-sm font-mono">
+                  <pre className="bg-gray-300 text-black p-4 rounded-md overflow-x-auto text-sm font-mono">
                     <code>{getCodeExample()}</code>
                   </pre>
 
@@ -363,7 +363,7 @@ export default function TextToImagePlayground() {
               </TabsContent>
               <TabsContent value="curl" className="mt-4">
                 <div className="relative">
-                  <pre className="bg-black text-gray-300 p-4 rounded-md overflow-x-auto text-sm font-mono">
+                  <pre className="bg-gray-300 text-black p-4 rounded-md overflow-x-auto text-sm font-mono">
                     <code>
                       {method === "POST"
                         ? `curl -X POST ${API_URL} \\
@@ -394,7 +394,7 @@ export default function TextToImagePlayground() {
               </TabsContent>
               <TabsContent value="wget" className="mt-4">
                 <div className="relative">
-                  <pre className="bg-black p-4 rounded-md overflow-x-auto text-sm text-gray-300">
+                  <pre className="bg-gray-300 p-4 rounded-md overflow-x-auto text-sm text-black">
                     <code>{`wget "${API_URL}?prompt=${encodeURIComponent(prompt)}" -O generated-image.png`}</code>
                   </pre>
 
