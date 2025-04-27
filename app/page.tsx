@@ -248,8 +248,8 @@ export default function TextToImagePlayground() {
   };
 
   return (
-    <div className="container mx-auto py-8 px-4 bg-gray-100">
-          <div className="container mx-auto py-8 px-4 bg-gray-100">
+    <div className="container mx-auto py-8 px-4 bg-gray-300">
+          <div className="container mx-auto py-8 px-4 bg-gray-300">
             <div className="flex flex-col justify-center items-center mb-2">
               <img src="/imagejesse.svg" alt="imagejesse" className="h-52 block mb-4" />
               <a
