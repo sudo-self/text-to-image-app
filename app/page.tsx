@@ -278,14 +278,9 @@ export default function TextToImagePlayground() {
                   sudo-self
                 </GitHubButton>
 
-                <GitHubButton
-                  href="https://github.com/sudo-self/text-to-image-worker"
-                  data-size="large"
-                  data-icon="octicon-package"
-                  aria-label="Follow sudo-self on GitHub"
-                >
-                  Cloudflared Workers
-                </GitHubButton>
+                <a href="https://deploy.workers.cloudflare.com/?url=https://github.com/sudo-self/text-to-image-worker">
+    <img src="https://deploy.workers.cloudflare.com/button" alt="Deploy to Cloudflare Workers" />
+  </a>
               </div>
             </div>
           </div>
