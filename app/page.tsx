@@ -299,7 +299,7 @@ export default function TextToImagePlayground() {
                 <br />
                 <Textarea
                   id="prompt"
-                  placeholder="text description of the image to generate..."
+                  placeholder="description of the image to generate"
                   value={prompt}
                   onChange={(e) => setPrompt(e.target.value)}
                   className="min-h-[100px]"
