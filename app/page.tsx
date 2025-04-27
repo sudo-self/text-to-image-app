@@ -114,14 +114,17 @@ export default function TextToImagePlayground() {
       setLoading(false);
     }
   };
+ 
 
-  const copyToClipboard = (text: string) => {
-    navigator.clipboard.writeText(text);
-    toast({
-      title: "image.JesseJesse.com",
-      description: "copied to the clipboard",
-    });
-  };
+    const copyToClipboard = (text: string) => {
+      navigator.clipboard.writeText(text);
+      toast({
+        title: "image.JesseJesse.com",
+        description: "command copied!",
+      });
+    };
+
+
 
   const getCodeExample = () => {
     if (method === "POST") {
