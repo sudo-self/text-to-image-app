@@ -247,47 +247,47 @@ wget -O generated-image.png "${API_URL}?prompt=${encodeURIComponent(prompt)}"`;
 
   return (
     <div className="container mx-auto py-8 px-4 bg-gray-100">
-      <div className="container mx-auto py-8 px-4 bg-gray-100">
-        <div className="flex justify-center items-center mb-2">
-          <img src="/imagejesse.svg" alt="imagejesse" className="h-52 block" />
-          <div className="flex flex-col items-start space-y-2">
-            <GitHubButton
-              href="https://github.com/sudo-self/text-to-image-app"
-              data-size="large"
-              data-icon="octicon-star"
-              aria-label="Star sudo-self/text-to-image-app on GitHub"
-            >
-              Star
-            </GitHubButton>
+          <div className="container mx-auto py-8 px-4 bg-gray-100">
+            <div className="flex flex-col justify-center items-center mb-2">
+              <img src="/imagejesse.svg" alt="imagejesse" className="h-52 block mb-4" />
+              <a
+                href="https://image.jessejesse.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-center mb-4 block text-transparent bg-clip-text bg-gradient-to-r from-blue-700 via-purple-700 to-pink-700 hover:underline"
+              >
+                image.JesseJesse.com
+              </a>
+              <div className="flex flex-col items-center space-y-4">
+                <GitHubButton
+                  href="https://github.com/sudo-self/text-to-image-app"
+                  data-size="large"
+                  data-icon="octicon-star"
+                  aria-label="Star sudo-self/text-to-image-app on GitHub"
+                >
+                  Star
+                </GitHubButton>
 
-            <GitHubButton
-              href="https://github.com/sudo-self"
-              data-size="large"
-              aria-label="Follow sudo-self on GitHub"
-            >
-              sudo-self
-            </GitHubButton>
-          <GitHubButton
-            href="https://github.com/sudo-self/text-to-image-worker"
-            data-size="large"
-            data-icon="octicon-package"
-            aria-label="Follow sudo-self on GitHub"
-          >
-            Cloudflared Workers
-          </GitHubButton>
+                <GitHubButton
+                  href="https://github.com/sudo-self"
+                  data-size="large"
+                  aria-label="Follow sudo-self on GitHub"
+                >
+                  sudo-self
+                </GitHubButton>
+
+                <GitHubButton
+                  href="https://github.com/sudo-self/text-to-image-worker"
+                  data-size="large"
+                  data-icon="octicon-package"
+                  aria-label="Follow sudo-self on GitHub"
+                >
+                  Cloudflared Workers
+                </GitHubButton>
+              </div>
+            </div>
           </div>
 
-        </div>
-
-        <a
-          href="https://image.jessejesse.com"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-center mb-8 block text-transparent bg-clip-text bg-gradient-to-r from-blue-700 via-purple-700 to-pink-700 hover:underline"
-        >
-          image.JesseJesse.com
-        </a>
-      </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 bg-gray-100">
         <Card>
@@ -593,6 +593,33 @@ wget -O generated-image.png "${API_URL}?prompt=${encodeURIComponent(prompt)}"`;
     </div>
   );
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
