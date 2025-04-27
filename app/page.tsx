@@ -556,7 +556,7 @@ export default function TextToImagePlayground() {
 
               <div className="relative">
                 <Label>Command</Label>
-                <pre className="mt-2 bg-black text-gray-300 p-4 rounded-md overflow-x-auto text-sm font-mono">
+                <pre className="mt-2 bg-gray-300 text-black p-4 rounded-md overflow-x-auto text-sm font-mono">
                   <code>{getCommandOutput().replace(/\\\n\s+/g, " ")}</code>
                 </pre>
 
@@ -582,7 +582,7 @@ export default function TextToImagePlayground() {
               className="w-full"
             >
               <Copy className="mr-2 h-4 w-4" />
-              Copy
+              Copy Command
             </Button>
           </CardFooter>
         </Card>
