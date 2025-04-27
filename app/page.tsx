@@ -118,8 +118,8 @@ export default function TextToImagePlayground() {
   const copyToClipboard = (text: string) => {
     navigator.clipboard.writeText(text);
     toast({
-      title: "Copied to clipboard",
-      description: "The code has been copied to your clipboard",
+      title: "JesseJesse.com",
+      description: "the request is ready to send",
     });
   };
 
@@ -149,8 +149,7 @@ export default function TextToImagePlayground() {
 })
 .catch(error => console.error("Error:", error))`;
     } else {
-      return `# Using wget in terminal
-wget -O generated-image.png "${API_URL}?prompt=${encodeURIComponent(prompt)}"`;
+      return `wget -O generated-image.png "${API_URL}?prompt=${encodeURIComponent(prompt)}"`;
     }
   };
 
@@ -534,8 +533,8 @@ wget -O generated-image.png "${API_URL}?prompt=${encodeURIComponent(prompt)}"`;
                         <SelectValue placeholder="Select method" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="POST">cURL (POST)</SelectItem>
-                        <SelectItem value="GET">cURL (GET)</SelectItem>
+                        <SelectItem value="POST">cURL POST</SelectItem>
+                        <SelectItem value="GET">cURL GET</SelectItem>
                         <SelectItem value="WGET">wget</SelectItem>
                       </SelectContent>
                     </Select>
