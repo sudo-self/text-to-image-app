@@ -118,8 +118,8 @@ export default function TextToImagePlayground() {
   const copyToClipboard = (text: string) => {
     navigator.clipboard.writeText(text);
     toast({
-      title: "JesseJesse.com",
-      description: "the request is ready to send",
+      title: "image.JesseJesse.com",
+      description: "copied to the clipboard",
     });
   };
 
