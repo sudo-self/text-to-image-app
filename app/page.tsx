@@ -299,7 +299,7 @@ export default function TextToImagePlayground() {
                 <br />
                 <Textarea
                   id="prompt"
-                  placeholder="description of the image to generate"
+                  placeholder="text description of the image"
                   value={prompt}
                   onChange={(e) => setPrompt(e.target.value)}
                   className="min-h-[100px]"
@@ -425,7 +425,7 @@ export default function TextToImagePlayground() {
         <Card>
           <CardHeader>
             <CardDescription>
-              generated image will appear here
+              image will arrive here
             </CardDescription>
           </CardHeader>
           <CardContent className="flex flex-col items-center justify-center min-h-[300px]">
@@ -460,7 +460,7 @@ export default function TextToImagePlayground() {
               <div className="flex flex-col items-center justify-center p-8 text-center">
                 <ImageIcon className="h-16 w-16 text-muted-foreground" />
                 <p className="mt-4 text-muted-foreground">
-                  Enter a prompt and click "Generate Image" to see the result
+                  Enter a text description and click "Generate Image" to see the result
                 </p>
               </div>
             )}
