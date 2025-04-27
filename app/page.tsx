@@ -363,7 +363,7 @@ export default function TextToImagePlayground() {
               </TabsContent>
               <TabsContent value="curl" className="mt-4">
                 <div className="relative">
-                  <pre className="bg-gray-300 text-purple-700 p-4 rounded-md overflow-x-auto text-sm font-mono">
+                  <pre className="bg-gray-300 text-black p-4 rounded-md overflow-x-auto text-sm font-mono">
                     <code>
                       {method === "POST"
                         ? `curl -X POST ${API_URL} \\
@@ -394,7 +394,7 @@ export default function TextToImagePlayground() {
               </TabsContent>
               <TabsContent value="wget" className="mt-4">
                 <div className="relative">
-                  <pre className="bg-gray-300 p-4 rounded-md overflow-x-auto text-sm text-purple-700">
+                  <pre className="bg-gray-300 p-4 rounded-md overflow-x-auto text-sm text-black">
                     <code>{`wget "${API_URL}?prompt=${encodeURIComponent(prompt)}" -O generated-image.png`}</code>
                   </pre>
 
@@ -525,10 +525,10 @@ export default function TextToImagePlayground() {
                 </div>
                 <div className="space-y-4">
                   <div className="space-y-2">
-                    <Label htmlFor="cmd-method">Command Type</Label>
+                    <Label htmlFor="cmd-method">HTTP Request</Label>
                     <Select value={method} onValueChange={setMethod}>
                       <SelectTrigger id="cmd-method">
-                        <SelectValue placeholder="Select method" />
+                        <SelectValue placeholder="Request Type" />
                       </SelectTrigger>
                       <SelectContent>
                         <SelectItem value="POST">cURL POST</SelectItem>
@@ -556,7 +556,7 @@ export default function TextToImagePlayground() {
 
               <div className="relative">
                 <Label>Command</Label>
-                <pre className="mt-2 bg-gray-300 text-purple-700 p-4 rounded-md overflow-x-auto text-sm font-mono">
+                <pre className="mt-2 bg-gray-300 text-black p-4 rounded-md overflow-x-auto text-sm font-mono">
                   <code>{getCommandOutput().replace(/\\\n\s+/g, " ")}</code>
                 </pre>
 
