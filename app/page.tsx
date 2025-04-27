@@ -250,9 +250,24 @@ wget -O generated-image.png "${API_URL}?prompt=${encodeURIComponent(prompt)}"`;
       <div className="container mx-auto py-8 px-4 bg-gray-100">
         <div className="flex justify-center mb-2">
           <img src="/imagejesse.svg" alt="imagejesse" className="h-52 block" />
-         <GitHubButton href="https://github.com/sudo-self/text-to-image-app" data-size="large">
-        Star
-      </GitHubButton>
+          <div className="flex flex-col items-start space-y-2">
+            <GitHubButton
+              href="https://github.com/sudo-self/text-to-image-app"
+              data-size="large"
+              aria-label="Star sudo-self/text-to-image-app on GitHub"
+            >
+              Star
+            </GitHubButton>
+
+            <GitHubButton
+              href="https://github.com/sudo-self"
+              data-size="large"
+              aria-label="Follow sudo-self on GitHub"
+            >
+              @sudo-self
+            </GitHubButton>
+          </div>
+
         </div>
 
         <a
@@ -569,42 +584,6 @@ wget -O generated-image.png "${API_URL}?prompt=${encodeURIComponent(prompt)}"`;
     </div>
   );
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
