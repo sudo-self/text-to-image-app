@@ -466,7 +466,7 @@ wget -O generated-image.png "${API_URL}?prompt=${encodeURIComponent(prompt)}"`;
           {imageUrl && (
             <CardFooter className="flex flex-col space-y-4 w-full">
               <div className="w-full">
-                <Label className="mb-2 block">Export Format</Label>
+               <br />
                 <RadioGroup
                   defaultValue="png"
                   name="format"
@@ -517,7 +517,7 @@ wget -O generated-image.png "${API_URL}?prompt=${encodeURIComponent(prompt)}"`;
             <div className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  <Label htmlFor="cmd-prompt">Text Prompt</Label>
+               <br />
                   <Textarea
                     id="cmd-prompt"
                     placeholder="text description of image..."
