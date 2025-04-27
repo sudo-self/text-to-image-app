@@ -254,6 +254,7 @@ wget -O generated-image.png "${API_URL}?prompt=${encodeURIComponent(prompt)}"`;
             <GitHubButton
               href="https://github.com/sudo-self/text-to-image-app"
               data-size="large"
+              data-icon="octicon-star"
               aria-label="Star sudo-self/text-to-image-app on GitHub"
             >
               Star
@@ -584,9 +585,6 @@ wget -O generated-image.png "${API_URL}?prompt=${encodeURIComponent(prompt)}"`;
     </div>
   );
 }
-
-
-
 
 
 
